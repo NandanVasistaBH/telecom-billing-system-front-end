@@ -1,0 +1,50 @@
+/* src/Components/FlashcardsList.css */
+.flashcards-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columns */
+    grid-template-rows: repeat(2, auto); /* 2 rows */
+    gap: 20px; /* Space between cards */
+    padding: 20px; /* Padding around the grid */
+  }
+   
+  .flashcard {
+    background-color: #b07136; /* Light blue background */
+    border-radius: 12px; /* Rounded corners */
+    padding: 20px; /* Padding inside the card */
+    text-align: center;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Shadow for depth */
+    transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition for hover effect */
+    width: 100%; /* Full width of the grid cell */
+    max-width: 250px; /* Maximum width */
+    height: 150px; /* Fixed height */
+  }
+   
+  .flashcard:hover {
+    transform: scale(1.05); /* Slightly enlarge card on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* More pronounced shadow on hover */
+  }
+   
+  .flashcard-details {
+    margin: 15px 0; /* Margin for spacing */
+  }
+   
+  .card-title, .card-data {
+    font-size: 18px; /* Font size for text */
+    margin: 10px 0; /* Margin for spacing */
+    color: #909df5; /* Grey text color */
+  }
+   
+  .recharge-button {
+    background-color: #152fe4; /* Dark blue button */
+    color: #fff;
+    border: none;
+    padding: 10px 20px; /* Padding for the button */
+    border-radius: 8px; /* Rounded corners for the button */
+    cursor: pointer;
+    font-size: 16px; /* Font size for the button text */
+    transition: background-color 0.3s; /* Smooth transition for button color */
+  }
+   
+  .recharge-button:hover {
+    background-color: #1a3fd7; /* Darker button color on hover */
+  }

@@ -1,0 +1,71 @@
+/* Container for the entire FAQ section */
+.faq-container {
+    max-width: 1100px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Title for the FAQ section */
+  .faq-title {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: #333;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Each FAQ question */
+  .faq-item {
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+    transition: all 0.3s ease;
+  }
+  
+  .faq-item:last-child {
+    border-bottom: none;
+  }
+  
+  /* The clickable question row */
+  .faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #007bff;
+    padding: 10px 0;
+    transition: all 0.3s ease;
+  }
+  
+  .faq-question:hover {
+    color: #0056b3; /* Slight color change on hover */
+  }
+  
+  /* Plus/minus icon for the question */
+  .faq-icon {
+    font-size: 24px;
+    transition: transform 0.3s ease;
+  }
+  
+  /* Hidden answer that appears on click */
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    font-size: 16px;
+    color: #555;
+    line-height: 1.5;
+    padding: 0 0;
+    transition: all 0.3s ease;
+    background-color: #fff;
+    margin-top: 10px;
+  }
+  
+  /* Show class when answer is visible */
+  .faq-answer.show {
+    max-height: 200px;
+    padding: 10px 0;
+  }

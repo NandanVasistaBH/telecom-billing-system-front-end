@@ -1,0 +1,30 @@
+.rounded-carousel .carousel-item img {
+    border-radius: 15px; /* Adjust the radius as needed */
+  }
+  
+  .rounded-image {
+    border-radius: 15px; /* Ensures images are rounded */
+    background-color: beige;
+  }
+  
+  .carousel-caption-overlay {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  
+  .carousel-caption-overlay h3{
+    color:white;
+    font-size: 60px;
+  }
+  .carousel-caption-overlay p{
+    color:white;
+    font-size: 40px;
+  }
+
+  .carousel-caption-overlay p {
+    margin: 0;
+  }

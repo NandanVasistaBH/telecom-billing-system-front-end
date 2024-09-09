@@ -1,0 +1,26 @@
+.j-container {
+    text-align: center;
+    width: 100%;
+   margin-top: 100px;
+  }
+  
+  .features-container {
+
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+   
+  }
+  
+  .feature {
+    
+    text-align: center;
+
+  }
+  
+  .feature p {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #333;
+  }
