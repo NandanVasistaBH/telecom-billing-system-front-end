@@ -18,7 +18,13 @@ pipeline {
         }
         stage('Install Dependencies') {
             steps {
-                bat 'npm install'
+                bat ```
+                npm cache clean --force
+                rmdir /s /q node_modules
+                npm install
+                npm run build
+
+                ```
             }
         }
         stage('Build React App') {
