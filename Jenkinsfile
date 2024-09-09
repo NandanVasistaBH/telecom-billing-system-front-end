@@ -31,5 +31,13 @@ pipeline {
                 bat 'npm run build'
             }
         }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    def imageName = 'my-react-app'
+                    bat "docker build -t ${imageName} ."
+                }
+            }
+        }
     }
 }
