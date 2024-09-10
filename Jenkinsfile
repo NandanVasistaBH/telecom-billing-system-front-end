@@ -21,8 +21,9 @@ pipeline {
                 bat '''
                 node -v
                 npm -v
+                dir
+                dir
                 npm install
-                npm run build
                 '''
             }
         }
