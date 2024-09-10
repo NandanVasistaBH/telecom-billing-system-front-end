@@ -19,8 +19,8 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 bat '''
-                npm cache clean --force
-                rmdir /s /q node_modules
+                node -v
+                npm -v
                 npm install
                 npm run build
                 '''
