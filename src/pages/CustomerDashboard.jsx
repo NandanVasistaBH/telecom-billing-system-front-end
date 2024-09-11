@@ -384,13 +384,13 @@
                           <strong>Phone Number:</strong>{" "}
                           {userDetails.custPhoneNo}
                         </p>
-                        <Button
+                        {/* <Button
                           variant="primary"
                           onClick={() => navigate("/profile")}
                           className="mt-3"
                         >
                           Edit Profile
-                        </Button>
+                        </Button> */}
                       </div>
                     </Card>
                   </Col>
@@ -436,7 +436,12 @@
                 {selectedInvoiceType === "prepaid" &&
                   renderInvoiceTable(prepaidInvoices)}
                 {selectedInvoiceType === "postpaid" &&
-                  renderInvoiceTable(postpaidInvoices)}
+                <>
+                  <button onClick={()=> window.location.reload()}>Reload</button>
+                  <div>{renderInvoiceTable(postpaidInvoices)}</div> 
+              
+                </>}
+                  
               </Col>
             </Row>
           </Container>

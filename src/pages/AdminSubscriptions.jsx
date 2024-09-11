@@ -28,7 +28,10 @@ const AdminSubscriptions = () => {
             }
             return response.json();
           })
-          .then((data) => setSubscriptions(data))
+          .then((data) => {
+            console.log(data)
+            setSubscriptions(data)
+      })
           .catch((error) => {
             console.error("Error fetching subscriptions:", error);
           });
@@ -132,7 +135,7 @@ const AdminSubscriptions = () => {
             key={subscription.id}
             className="list-group-item d-flex justify-content-between align-items-center"
           >
-            {subscription.description} - ₹{subscription.price}
+          <div>{subscription.type}</div>  {subscription.description} - ₹{subscription.price}
             <button
               className="btn btn-danger btn-sm"
               onClick={() => handleDeleteSubscription(subscription.id)}

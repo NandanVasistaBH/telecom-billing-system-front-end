@@ -6,7 +6,8 @@ import { Modal, Button } from "react-bootstrap";
 const RechargeForm = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { subscription, userDetails } = location.state || {};
+  const { subscription } = location.state || {};
+  console.log(subscription)
   const [paymentMethod, setPaymentMethod] = useState("");
   const [amountPaid, setAmountPaid] = useState(
     location.state?.subscription?.price || 0
@@ -23,6 +24,7 @@ const RechargeForm = () => {
   const [isPrepaid, setIsPrepaid] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [paymentResponse,setPaymentResponse] = useState({})
+  const [userDetails,setUserDetails]=useState({})
 
   useEffect(() => {
     const loadRazorpayScript = () => {
@@ -39,6 +41,17 @@ const RechargeForm = () => {
     } else {
       setScriptLoaded(true);
     }
+    const getUserDetailsFromToken=async()=>{
+      const response =await fetch("http://localhost:10000/customer/details-from-token",{
+        headers:{
+          Authorization:"Bearer "+localStorage.getItem("jwtToken")
+        }
+      })
+      const data = await response.json();
+      console.log(data)
+      setUserDetails(data)
+    }
+    getUserDetailsFromToken()
   }, []);
 
   useEffect(() => {
@@ -126,6 +139,7 @@ const RechargeForm = () => {
             console.log("Payment response:", responseData);
             setPaymentResponse(responseData)
             if (isPrepaid) {
+              console.log("payment done " + "invoice generating.....")
               await createPrepaidInvoice(responseData);
             }
 
@@ -212,7 +226,7 @@ const RechargeForm = () => {
             customer: { id: userDetails?.id },
             payment: { payId: responseData.payId},
             subscription: { id: subscription?.id },
-            supplier: { id: 1 }
+            supplier: { id: userDetails?.supplierId }
           }),
         }
       );
@@ -221,7 +235,7 @@ const RechargeForm = () => {
         throw new Error("Failed to create prepaid invoice.");
       }
 
-      return await response;
+      return response;
     } catch (error) {
       setError("Error creating invoice: " + error.message);
     }
@@ -251,8 +265,7 @@ const RechargeForm = () => {
       if (!response.ok) {
         throw new Error("Failed to create postpaid invoice.");
       }
-
-      return await response;
+      return  response;
     } catch (error) {
       setError("Error creating invoice: " + error.message);
     }
