@@ -1,4 +1,4 @@
-FROM node:16.20.0-alpine
+FROM node:20-alpine
 
 ENV NODE_ENV=DEV
 
@@ -8,7 +8,7 @@ COPY package.json .
 
 RUN npm install
 
-EXPOSE 3002
+EXPOSE 3000
 
 COPY . .
 

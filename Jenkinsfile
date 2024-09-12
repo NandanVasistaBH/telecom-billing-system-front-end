@@ -45,7 +45,7 @@ pipeline {
         stage("Run React Container") {
             steps {
                 bat '''
-                docker run -d --name my-react-app --network my-network -p 3002:3002 my-react-app
+                docker run -d --name my-react-app --network my-network -p 3002:3000 my-react-app
                 '''
             }
         }
