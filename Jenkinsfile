@@ -36,13 +36,11 @@ pipeline {
                 }
             }
         }
-        stage('Build Docker Image') {
+        stage('Build React App') {
             steps {
-                script {
-                    def imageName = 'my-react-app'
-                    bat "docker build -t ${imageName} ."
-                }
+                bat 'npx react-scripts build'
             }
         }
+
     }
 }
