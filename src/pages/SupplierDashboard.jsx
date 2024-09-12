@@ -1,9 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Button, Navbar, Nav, NavDropdown } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Button,
+  Navbar,
+  Nav,
+} from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const SupplierDashboard = () => {
-  const [supplierId, setSupplierId] = useState(''); // You can remove this if not using it
   const [supplierDetails, setSupplierDetails] = useState(null);
   const [customers, setCustomers] = useState([]);
   const [error, setError] = useState(null);
@@ -11,18 +18,20 @@ const SupplierDashboard = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
-    console.log(token)
     const fetchSupplierDetails = async () => {
       if (token) {
         try {
-          const response = await fetch(`http://localhost:10000/supplier/details-from-token`, {
-            method: 'GET',
-            headers: {
-              'Authorization': 'Bearer ' + localStorage.getItem('jwtToken'),
-              'Content-Type': 'application/json'
+          const response = await fetch(
+            `http://localhost:10000/supplier/details-from-token`,
+            {
+              method: "GET",
+              headers: {
+                Authorization: "Bearer " + localStorage.getItem("jwtToken"),
+                "Content-Type": "application/json",
+              },
             }
-          });
-          if (!response.ok) throw new Error('Network response was not ok');
+          );
+          if (!response.ok) throw new Error("Network response was not ok");
           const data = await response.json();
           setSupplierDetails(data);
         } catch (err) {
@@ -37,14 +46,17 @@ const SupplierDashboard = () => {
   const fetchCustomers = async () => {
     if (!supplierDetails) return;
     try {
-      const response = await fetch(`http://localhost:10000/supplier/list-of-customers?supplierId=${supplierDetails.id}`, {
-        method: 'GET',
-        headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem('jwtToken'),
-          'Content-Type': 'application/json'
+      const response = await fetch(
+        `http://localhost:10000/supplier/list-of-customers?supplierId=${supplierDetails.id}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("jwtToken"),
+            "Content-Type": "application/json",
+          },
         }
-      });
-      if (!response.ok) throw new Error('Network response was not ok');
+      );
+      if (!response.ok) throw new Error("Network response was not ok");
       const data = await response.json();
       setCustomers(data);
     } catch (err) {
@@ -62,7 +74,7 @@ const SupplierDashboard = () => {
       <Navbar bg="primary" variant="dark" expand="lg">
         <Container>
           <Navbar.Brand
-            onClick={() => navigate('/')}
+            onClick={() => navigate("/")}
             className="d-flex align-items-center"
           >
             <img
@@ -88,16 +100,20 @@ const SupplierDashboard = () => {
       {/* Main Content */}
       <div
         style={{
-          background: "rgb(255,255,255)",
-          background: "radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(92,118,255,1) 100%)", // You can remove this if you want only the gradient
+          background:
+            "radial-gradient(circle, rgba(204,229,255,1) 0%, rgba(255,255,255,1) 100%)",
           minHeight: "100vh",
-          padding: "20px",
-          // Gradient applied here
+          padding: "30px",
         }}
       >
         <Container>
           <header className="text-center mb-4">
-            <h1 className="text-primary">Supplier Dashboard</h1>
+            <h1 className="text-dark display-4 font-weight-bold">
+              Supplier Dashboard
+            </h1>
+            <p className="text-muted lead">
+              Overview of your branch and customers
+            </p>
           </header>
 
           {/* Supplier Details */}
@@ -105,35 +121,41 @@ const SupplierDashboard = () => {
             <Row className="mb-4">
               <Col md={12} className="d-flex justify-content-center">
                 <Card
-                  className="p-4 shadow"
+                  className="p-4 shadow-sm"
                   style={{
-                    backgroundColor: "white",
-                    borderRadius: "8px",
+                    background:
+                      "linear-gradient(135deg, #e0f7fa 0%, #ffffff 50%, #f7f9fc 100%)",
+                    borderRadius: "15px",
                     border: "1px solid #ddd",
                     width: "100%",
-                    maxWidth: "800px", // Adjust max width as needed
+                    maxWidth: "900px",
                   }}
                 >
-                  <h2 className="mb-3 text-primary text-center">
+                  <h2 className="text-primary mb-4 font-weight-bold">
                     Supplier Details
                   </h2>
-                  <div className="d-flex flex-column align-items-center">
-                    <p style={{ color: "#333" }}>
+                  <div
+                    className="d-flex flex-column"
+                    style={{ alignItems: "flex-start" }}
+                  >
+                    <p className="mb-2" style={{ color: "#000" }}>
                       <strong>Branch Name:</strong> {supplierDetails.name}
                     </p>
-                    <p style={{ color: "#333" }}>
-                      <strong>Branch Manager:</strong> {supplierDetails.branchManager}
+                    <p className="mb-2" style={{ color: "#000" }}>
+                      <strong>Branch Manager:</strong>{" "}
+                      {supplierDetails.branchManager}
                     </p>
-                    <p style={{ color: "#333" }}>
-                      <strong>Branch Location:</strong> {supplierDetails.branchLoc}
+                    <p className="mb-2" style={{ color: "#000" }}>
+                      <strong>Branch Location:</strong>{" "}
+                      {supplierDetails.branchLoc}
                     </p>
-                    <p style={{ color: "#333" }}>
+                    <p className="mb-2" style={{ color: "#000" }}>
                       <strong>Email:</strong> {supplierDetails.branchEmail}
                     </p>
-                    <p style={{ color: "#333" }}>
-                      <strong>Phone Number:</strong> {supplierDetails.branchPhoneNo}
+                    <p className="mb-0" style={{ color: "#000" }}>
+                      <strong>Phone Number:</strong>{" "}
+                      {supplierDetails.branchPhoneNo}
                     </p>
-                    {/* You can add more details here */}
                   </div>
                 </Card>
               </Col>
@@ -146,7 +168,16 @@ const SupplierDashboard = () => {
               <Button
                 onClick={handleFetchCustomers}
                 variant="primary"
-                style={{ borderRadius: "25px", boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)" }}
+                style={{
+                  background:
+                    "linear-gradient(135deg, #007bff 0%, #0056d2 100%)",
+                  borderRadius: "25px",
+                  color: "#fff",
+                  boxShadow: "0px 6px 10px rgba(0, 0, 0, 0.2)",
+                  padding: "10px 30px",
+                  fontWeight: "bold",
+                  fontSize: "18px",
+                }}
               >
                 Get Customers
               </Button>
@@ -154,32 +185,74 @@ const SupplierDashboard = () => {
           </Row>
 
           {/* Customer List */}
-          {error && <p className="text-danger">{error}</p>}
+          {error && <p className="text-danger text-center">{error}</p>}
           {customers.length > 0 && (
             <Row>
               <Col md={12}>
                 <div
-                  className="bg-white p-4 rounded shadow"
+                  className="bg-white p-4 rounded shadow-sm"
                   style={{
-                    background: "linear-gradient(135deg, #e0f7fa, #b2dfdb)",
-                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"
+                    background:
+                      "linear-gradient(135deg, #f0f8ff 0%, #ffffff 100%)",
+                    borderRadius: "12px",
+                    boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)",
+                    border: "1px solid #ddd",
                   }}
                 >
-                  <h2 className="text-primary mb-3">Customer List</h2>
-                  <ul className="list-unstyled">
-                    {customers.map(customer => (
-                      <li key={customer.id} className="mb-3 p-4 border rounded"
-                          style={{
-                            background: "linear-gradient(135deg, #ffffff, #f1f8e9)",
-                            border: "1px solid #ddd",
-                            boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)"
-                          }}>
-                        <p className="font-weight-bold" style={{ color: "#007bff" }}><strong>Name:</strong> {customer.name}</p>
-                        <p className="font-weight-bold" style={{ color: "#007bff" }}><strong>Email:</strong> {customer.custEmail}</p>
-                        <p className="font-weight-bold" style={{ color: "#007bff" }}><strong>Phone Number</strong> {customer.custPhoneNo}</p>
-                      </li>
-                    ))}
-                  </ul>
+                  <h2 className="text-primary mb-3 font-weight-bold text-center">
+                    Customer List
+                  </h2>
+                  <table className="table table-striped table-hover table-borderless">
+                    <thead className="thead-light">
+                      <tr style={{ backgroundColor: "#e3f2fd" }}>
+                        <th
+                          className="text-dark"
+                          style={{ fontWeight: "bold", color: "#000" }}
+                        >
+                          Name
+                        </th>
+                        <th
+                          className="text-dark"
+                          style={{ fontWeight: "bold", color: "#000" }}
+                        >
+                          Email
+                        </th>
+                        <th
+                          className="text-dark"
+                          style={{ fontWeight: "bold", color: "#000" }}
+                        >
+                          Phone Number
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {customers.map((customer) => (
+                        <tr
+                          key={customer.id}
+                          style={{ borderBottom: "1px solid #ddd" }}
+                        >
+                          <td
+                            className="text-secondary"
+                            style={{ fontWeight: "bold", color: "#000" }}
+                          >
+                            {customer.name}
+                          </td>
+                          <td
+                            className="text-secondary"
+                            style={{ fontWeight: "bold", color: "#000" }}
+                          >
+                            {customer.custEmail}
+                          </td>
+                          <td
+                            className="text-secondary"
+                            style={{ fontWeight: "bold", color: "#000" }}
+                          >
+                            {customer.custPhoneNo}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </Col>
             </Row>

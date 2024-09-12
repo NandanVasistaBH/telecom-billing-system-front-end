@@ -8,7 +8,6 @@
     Nav,
     NavDropdown,
     Card,
-    Modal,
     Table,
   } from "react-bootstrap";
   import { useNavigate, Link } from "react-router-dom";
@@ -345,9 +344,10 @@
         {/* Main Content */}
         <div
           style={{
-            backgroundColor: "#FFFDD0",
+            background:
+              "radial-gradient(circle, rgba(204,229,255,1) 0%, rgba(255,255,255,1) 100%)",
             minHeight: "100vh",
-            padding: "20px",
+            padding: "30px",
           }}
         >
           <Container>
@@ -367,30 +367,27 @@
                         borderRadius: "8px",
                         border: "1px solid #ddd",
                         width: "100%",
-                        maxWidth: "800px", // Adjust max width as needed
+                        maxWidth: "800px",
                       }}
                     >
                       <h2 className="mb-3 text-primary text-center">
                         Your Details
                       </h2>
-                      <div className="d-flex flex-column align-items-center">
-                      <p style={{ color: "#333" }}>
-                        <strong>Name:</strong> {userDetails.name}
-                      </p>
-                      <p style={{ color: "#333" }}>
-                        <strong>Email:</strong> {userDetails.custEmail}
-                      </p>
-                      <p style={{ color: "#333" }}>
-                        <strong>Phone Number:</strong> {userDetails.custPhoneNo}
-                      </p>
-                      {/* <Button
-                        variant="primary"
-                        onClick={() => navigate("/profile")}
-                        className="mt-3"
+                      <div
+                        className="d-flex flex-column"
+                        style={{ alignItems: "flex-start" }}
                       >
-                        Edit Profile
-                      </Button> */}
-                    </div>
+                        <p style={{ color: "#000" }}>
+                          <strong>Name:</strong> {userDetails.name}
+                        </p>
+                        <p style={{ color: "#000" }}>
+                          <strong>Email:</strong> {userDetails.custEmail}
+                        </p>
+                        <p style={{ color: "#000" }}>
+                          <strong>Phone Number:</strong>{" "}
+                          {userDetails.custPhoneNo}
+                        </p>
+                      </div>
                     </Card>
                   </Col>
                 </Row>
@@ -434,13 +431,14 @@
               <Col md={12}>
                 {selectedInvoiceType === "prepaid" &&
                   renderInvoiceTable(prepaidInvoices)}
-                {selectedInvoiceType === "postpaid" &&
-                <>
-                  <button onClick={()=> window.location.reload()}>Reload</button>
-                  <div>{renderInvoiceTable(postpaidInvoices)}</div> 
-              
-                </>}
-                  
+                {selectedInvoiceType === "postpaid" && (
+                  <>
+                    <button onClick={() => window.location.reload()}>
+                      Reload
+                    </button>
+                    <div>{renderInvoiceTable(postpaidInvoices)}</div>
+                  </>
+                )}
               </Col>
             </Row>
           </Container>

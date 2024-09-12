@@ -14,7 +14,7 @@ import PaymentMethodPage from './pages/PaymentMethodPage';
 import PrepaidRecharge from './pages/PrepaidRecharge';
 import PostpaidRecharge from './pages/PostpaidRecharge';
 import ContactUs from './Components/ContactUs';
-import AdminLogin from './Components/AdminLogin';
+import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import SupplierRegister from './pages/SupplierRegister';
 import SupplierLogin from './pages/SupplierLogin';

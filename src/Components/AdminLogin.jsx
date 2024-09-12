@@ -1,81 +1,65 @@
 import React, { useState } from "react";
-import { useNavigate,Link } from "react-router-dom";
-import {
-  Container,
-  Navbar,
-} from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { Container, Navbar } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 
-const CustomerLogin = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+const AdminLogin = () => {
+  const [formData, setFormData] = useState({
+    user: {
+      name: "",
+      password: "",
+      role: "ADMIN", // default value as specified
+    },
+  });
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-
-    const loginData = {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
       user: {
-        name: username,
-        password: password,
-        role: "CUSTOMER",
+        ...prev.user,
+        [name]: value,
       },
-    };
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const apiEndpoint = "http://localhost:10000/admin/login";
 
     try {
-      const response = await fetch("http://localhost:10000/customer/login", {
+      const response = await fetch(apiEndpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(loginData),
+        body: JSON.stringify(formData),
       });
-
       if (response.ok) {
-        const jwtToken = await response.text(); // Assuming the token is returned as a plain text
+        const jwtToken = await response.text(); // Parse the response
         if (jwtToken && jwtToken !== "failure") {
+          // Store the token in localStorage or sessionStorage
           localStorage.setItem("jwtToken", jwtToken);
           alert("Login successful!");
-          navigate("/CustomerDashboard");
+          navigate("/admindashboard");
         } else {
-          alert("Wrong password or username");
+          alert("Wrong username or password");
         }
       } else {
-        setErrorMessage("Invalid username or password.");
+        const errorData = await response.json(); // Fetch error message if available
+        setErrorMessage(errorData.message || "Please try again.");
       }
     } catch (error) {
-      console.error("An error occurred during login:", error);
+      console.error("Error during login:", error);
       setErrorMessage(
-        "An error occurred while logging in. Please try again later."
+        "An error occurred. Please check the console for more details."
       );
     }
   };
 
   return (
-    <>
-    <Navbar bg="primary" variant="dark" expand="lg">
-          <Container>
-            <Navbar.Brand
-              as={Link}
-              to="/"
-              className="d-flex align-items-center"
-            >
-              <img
-                src="/telstraLogo1.jpeg"
-                alt="Telstra Logo"
-                style={{ width: "50px", height: "auto" }}
-              />
-              <span className="ms-2" style={{ color: "#FFFDD0" }}>
-                TeleBillPro
-              </span>
-            </Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-            </Navbar.Collapse>
-          </Container>
-      </Navbar>
-      
     <div
       style={{
         background:
@@ -89,7 +73,7 @@ const CustomerLogin = () => {
           <div className="col-md-6 d-flex align-items-center justify-content-center">
             <img
               src="../telstraLogo1.jpeg"
-              alt="Login"
+              alt="Admin Login"
               className="img-fluid"
               style={{ maxHeight: "100vh", objectFit: "cover" }}
             />
@@ -97,9 +81,9 @@ const CustomerLogin = () => {
           <div className="col-md-6 d-flex align-items-center justify-content-center">
             <div
               style={{
-                maxWidth: "900px", // Increased width for larger login box
-                padding: "40px", // Increased padding for better spacing
-                backgroundColor: "#ffffff", // Original color
+                maxWidth: "900px",
+                padding: "40px",
+                backgroundColor: "#cce0ff",
                 borderRadius: "8px",
                 boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
                 borderColor: "#0033A0",
@@ -115,12 +99,12 @@ const CustomerLogin = () => {
                   fontSize: "30px",
                 }}
               >
-                Login
+                Admin Login
               </h2>
-              <form onSubmit={handleLogin}>
+              <form onSubmit={handleSubmit}>
                 <div style={{ marginBottom: "20px" }}>
                   <label
-                    htmlFor="username"
+                    htmlFor="name"
                     style={{
                       display: "block",
                       marginBottom: "10px",
@@ -133,16 +117,17 @@ const CustomerLogin = () => {
                   </label>
                   <input
                     type="text"
-                    id="username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    id="name"
+                    name="name"
+                    value={formData.user.name}
+                    onChange={handleChange}
                     required
                     style={{
                       width: "100%",
-                      padding: "12px", // Increased padding
+                      padding: "12px",
                       borderRadius: "4px",
-                      border: "1px solid #0033A0", // Original border color
-                      fontSize: "16px", // Increased font size
+                      border: "1px solid #0033A0",
+                      fontSize: "16px",
                     }}
                   />
                 </div>
@@ -162,15 +147,16 @@ const CustomerLogin = () => {
                   <input
                     type="password"
                     id="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    name="password"
+                    value={formData.user.password}
+                    onChange={handleChange}
                     required
                     style={{
                       width: "100%",
-                      padding: "12px", // Increased padding
+                      padding: "12px",
                       borderRadius: "4px",
-                      border: "1px solid #0033A0", // Original border color
-                      fontSize: "16px", // Increased font size
+                      border: "1px solid #0033A0",
+                      fontSize: "16px",
                     }}
                   />
                 </div>
@@ -185,13 +171,13 @@ const CustomerLogin = () => {
                   type="submit"
                   style={{
                     width: "100%",
-                    padding: "12px", // Increased padding
-                    backgroundColor: "#0033A0", // Original button color
+                    padding: "12px",
+                    backgroundColor: "#0033A0",
                     color: "white",
                     border: "none",
                     borderRadius: "4px",
                     cursor: "pointer",
-                    fontSize: "16px", // Increased font size
+                    fontSize: "16px",
                   }}
                 >
                   Login
@@ -225,8 +211,7 @@ const CustomerLogin = () => {
         </div>
       </div>
     </div>
-    </>
   );
 };
 
-export default CustomerLogin;
+export default AdminLogin;

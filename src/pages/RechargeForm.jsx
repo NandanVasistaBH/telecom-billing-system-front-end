@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Form } from "react-bootstrap";
 
 const RechargeForm = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { subscription } = location.state || {};
-  console.log(subscription)
   const [paymentMethod, setPaymentMethod] = useState("");
   const [amountPaid, setAmountPaid] = useState(
     location.state?.subscription?.price || 0
@@ -23,8 +22,8 @@ const RechargeForm = () => {
   const [mobileNumberError, setMobileNumberError] = useState("");
   const [isPrepaid, setIsPrepaid] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
-  const [paymentResponse,setPaymentResponse] = useState({})
-  const [userDetails,setUserDetails]=useState({})
+  const [paymentResponse, setPaymentResponse] = useState({});
+  const [userDetails, setUserDetails] = useState({});
 
   useEffect(() => {
     const loadRazorpayScript = () => {
@@ -41,17 +40,19 @@ const RechargeForm = () => {
     } else {
       setScriptLoaded(true);
     }
-    const getUserDetailsFromToken=async()=>{
-      const response =await fetch("http://localhost:10000/customer/details-from-token",{
-        headers:{
-          Authorization:"Bearer "+localStorage.getItem("jwtToken")
+    const getUserDetailsFromToken = async () => {
+      const response = await fetch(
+        "http://localhost:10000/customer/details-from-token",
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("jwtToken"),
+          },
         }
-      })
+      );
       const data = await response.json();
-      console.log(data)
-      setUserDetails(data)
-    }
-    getUserDetailsFromToken()
+      setUserDetails(data);
+    };
+    getUserDetailsFromToken();
   }, []);
 
   useEffect(() => {
@@ -128,18 +129,13 @@ const RechargeForm = () => {
                 body: response.razorpay_payment_id,
               }
             );
-            
 
             if (!addPaymentResponse.ok) {
               throw new Error("Error adding payment.");
             }
             const responseData = await addPaymentResponse.json();
-      
-            // Log the parsed response
-            console.log("Payment response:", responseData);
-            setPaymentResponse(responseData)
+            setPaymentResponse(responseData);
             if (isPrepaid) {
-              console.log("payment done " + "invoice generating.....")
               await createPrepaidInvoice(responseData);
             }
 
@@ -148,7 +144,7 @@ const RechargeForm = () => {
                 ? "Your prepaid transaction was successful and the plan is activated!"
                 : "Your postpaid transaction was successful and the plan is activated!"
             );
-            setShowSuccessModal(true); // Show success modal
+            setShowSuccessModal(true);
           } catch (error) {
             setError("Error during payment processing: " + error.message);
           }
@@ -185,7 +181,7 @@ const RechargeForm = () => {
         setSuccessMessage(
           "Your postpaid transaction was successful and the plan is activated!"
         );
-        setShowSuccessModal(true); // Show success modal
+        setShowSuccessModal(true);
       } catch (error) {
         setError("Error creating invoice: " + error.message);
       } finally {
@@ -208,8 +204,6 @@ const RechargeForm = () => {
   };
 
   const createPrepaidInvoice = async (responseData) => {
-    console.log(responseData);
-    console.log(responseData.payId);
     try {
       const jwtToken = localStorage.getItem("jwtToken");
       const response = await fetch(
@@ -224,17 +218,15 @@ const RechargeForm = () => {
             amountPaid: amountPaid,
             tax: 15.0,
             customer: { id: userDetails?.id },
-            payment: { payId: responseData.payId},
+            payment: { payId: responseData.payId },
             subscription: { id: subscription?.id },
-            supplier: { id: userDetails?.supplierId }
+            supplier: { id: userDetails?.supplierId },
           }),
         }
       );
-      console.log(response)
       if (!response.ok) {
         throw new Error("Failed to create prepaid invoice.");
       }
-
       return response;
     } catch (error) {
       setError("Error creating invoice: " + error.message);
@@ -265,7 +257,7 @@ const RechargeForm = () => {
       if (!response.ok) {
         throw new Error("Failed to create postpaid invoice.");
       }
-      return  response;
+      return response;
     } catch (error) {
       setError("Error creating invoice: " + error.message);
     }
@@ -273,25 +265,25 @@ const RechargeForm = () => {
 
   const handleSuccessClose = () => {
     setShowSuccessModal(false);
-    navigate("/CustomerDashboard", { state: { subscription, userDetails } }); // Pass subscription and userDetails to dashboard
+    navigate("/CustomerDashboard", { state: { subscription, userDetails } });
   };
 
   return (
     <div
       className="d-flex justify-content-center align-items-center vh-100"
-      style={{ backgroundColor: "#FFF9C4" }} // Full viewport yellow background
+      style={{ backgroundColor: "#EAEDED" }} // Light gray background for the whole page
     >
       <div
         className="p-4 rounded shadow-sm"
         style={{
           backgroundColor: "#FFFFFF", // White background for the form
-          maxWidth: "600px", // Max width of the form
-          width: "100%", // Full width within max-width
-          boxShadow: "0 4px 8px rgba(0,0,0,0.2)", // Shadow for better separation
+          maxWidth: "600px",
+          width: "100%",
+          boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
         }}
       >
         <h2 className="text-primary text-center mb-4">Recharge Your Mobile</h2>
-        <form className="form" onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}>
           {error && <div className="alert alert-danger">{error}</div>}
           <p>
             <strong>Type:</strong> {subscription?.type}
@@ -302,20 +294,19 @@ const RechargeForm = () => {
           <p>
             <strong>Price:</strong> ₹{amountPaid.toFixed(2)}
           </p>
-          <div className="form-group">
-            <label htmlFor="mobileNumber">Mobile Number:</label>
-            <input
+          <Form.Group controlId="mobileNumber">
+            <Form.Label>Mobile Number:</Form.Label>
+            <Form.Control
               type="text"
-              id="mobileNumber"
-              className="form-control"
               value={mobileNumber}
               onChange={handleMobileNumberChange}
               placeholder="Enter your mobile number"
+              isInvalid={!!mobileNumberError}
             />
-            {mobileNumberError && (
-              <div className="text-danger">{mobileNumberError}</div>
-            )}
-          </div>
+            <Form.Control.Feedback type="invalid">
+              {mobileNumberError}
+            </Form.Control.Feedback>
+          </Form.Group>
           <div className="text-center">
             <button
               type="submit"
@@ -325,7 +316,7 @@ const RechargeForm = () => {
               {loading ? "Processing..." : "Submit Payment"}
             </button>
           </div>
-        </form>
+        </Form>
       </div>
 
       {/* Success Modal */}

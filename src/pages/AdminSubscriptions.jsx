@@ -215,7 +215,7 @@ const AdminSubscriptions = () => {
           </form>
         </div>
       </div>
-    </div>
+      </div>
   );
 };
 
