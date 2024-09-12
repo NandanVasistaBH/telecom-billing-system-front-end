@@ -22,14 +22,18 @@ pipeline {
                 node -v
                 npm -v
                 dir
-                dir
+                dir node_modules/.bin
                 npm install
                 '''
             }
         }
         stage('Build React App') {
             steps {
-                bat 'npm run build'
+                script {
+                    def binPath = "${env.WORKSPACE}/node_modules/.bin"
+                    bat "set PATH=%PATH%;${binPath}"
+                    bat 'npm run build'
+                }
             }
         }
         stage('Build Docker Image') {
