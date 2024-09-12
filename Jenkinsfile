@@ -27,17 +27,26 @@ pipeline {
                 '''
             }
         }
-        stage('Build React App') {
-            steps {
-                bat 'npx react-scripts build'
-            }
-        }
         stage('Build Docker Image') {
             steps {
                 script {
                     def imageName = 'my-react-app'
-                    bat "docker build -t ${imageName} ."
+                    try{
+                        bat "docker rm -f ${imageName}"
+                        bat "docker rmi -f ${imageName}"
+                    }   
+                     catch(Exception e) {
+                        echo "Exception occurred: " + e.toString()
+                    }
+                    bat "docker build  -t ${imageName} ."
                 }
+            }
+        }
+        stage("Run React Container") {
+            steps {
+                bat '''
+                docker run -d --name my-react-app --network my-network -p 3002:3002 my-react-app
+                '''
             }
         }
     }
