@@ -53,18 +53,26 @@ const PrepaidRecharge = () => {
       style={{ backgroundColor: "#FFFDD0" }}
     >
       <h1 className="text-center mb-4" style={{ color: "#0033A0" }}>
-        Subscription Plans
+        Prepaid Subscription Plans
       </h1>
       {error && <p className="text-center text-danger">{`Error: ${error}`}</p>}
       {data.length ? (
-        <Row className="flex-grow-1">
+        <Row className="d-flex justify-content-center" style={{ gap: "1rem" }}>
           {data.map((item) => (
-            <Col md={3} sm={6} className="mb-4" key={item.id}>
+            <Col md={4} sm={6} className="d-flex justify-content-center mb-3" key={item.id}>
               <Card
-                style={{ backgroundColor: "#EAEDED", borderRadius: "10px" }}
+                className="text-center"
+                style={{
+                  backgroundColor: "#FFFFFF", // White background
+                  borderRadius: "10px",
+                  border: "1px solid #0033A0", // Blue border
+                  width: "100%", // Full width column
+                  maxWidth: "300px", // Maximum width for the card
+                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)" // Optional: Adds shadow for better visibility
+                }}
               >
-                <Card.Body>
-                  <Card.Title style={{ color: "#0033A0" }}>
+                <Card.Body style={{ padding: "1rem" }}> {/* Adjust padding here */}
+                  <Card.Title style={{ color: "#0033A0", fontSize: "1.25rem" }}>
                     {item.type}
                   </Card.Title>
                   <Card.Text>
@@ -80,8 +88,9 @@ const PrepaidRecharge = () => {
                     variant="primary"
                     onClick={() => handleRechargeClick(item)}
                     style={{
-                      backgroundColor: "#E4002B",
-                      borderColor: "#E4002B",
+                      backgroundColor: "#0033A0", // Blue button
+                      borderColor: "#0033A0",
+                      width: "100%", // Full width button
                     }}
                   >
                     Recharge

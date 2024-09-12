@@ -13,7 +13,6 @@ const AdminSubscriptions = () => {
   useEffect(() => {
     const fetchSubscriptions = () => {
       const token = localStorage.getItem("jwtToken"); // Get the JWT token from storage
-      console.log("Token: " + token);
       if (token) {
         // Fetch all subscriptions
         fetch("http://localhost:10000/subscriptions/all", {
@@ -29,9 +28,8 @@ const AdminSubscriptions = () => {
             return response.json();
           })
           .then((data) => {
-            console.log(data)
-            setSubscriptions(data)
-      })
+            setSubscriptions(data);
+          })
           .catch((error) => {
             console.error("Error fetching subscriptions:", error);
           });
@@ -63,6 +61,7 @@ const AdminSubscriptions = () => {
     })
       .then((response) => {
         if (!response.ok) {
+          console.log(response);
           throw new Error(`Error: ${response.status}`); // Handle non-200 status codes
         }
         return response;
@@ -127,86 +126,95 @@ const AdminSubscriptions = () => {
   };
 
   return (
-    <div className="container">
-      <h3 className="text-primary mb-4">Subscription List</h3>
-      <ul className="list-group mb-4">
-        {subscriptions.map((subscription) => (
-          <li
-            key={subscription.id}
-            className="list-group-item d-flex justify-content-between align-items-center"
-          >
-          <div>{subscription.type}</div>  {subscription.description} - ₹{subscription.price}
-            <button
-              className="btn btn-danger btn-sm"
-              onClick={() => handleDeleteSubscription(subscription.id)}
-            >
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
+    <div className="container mt-4">
+      <div className="row">
+        {/* Subscription List */}
+        <div className="col-md-6 mb-4">
+          <h3 className="text-primary mb-3">Subscription List</h3>
+          <ul className="list-group">
+            {subscriptions.map((subscription) => (
+              <li
+                key={subscription.id}
+                className="list-group-item d-flex justify-content-between align-items-center"
+              >
+                <div>
+                  <div className="fw-bold">{subscription.type}</div>
+                  <div>{subscription.description}</div>
+                  <div className="text-muted">₹{subscription.price}</div>
+                </div>
+                <button
+                  className="btn btn-danger btn-sm"
+                  onClick={() => handleDeleteSubscription(subscription.id)}
+                >
+                  Delete
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-      <h3 className="text-primary mb-3">Create New Subscription</h3>
-      <form onSubmit={handleCreateSubscription}>
-        <div className="mb-3">
-          <label className="form-label">Type:</label>
-          <input
-            type="text"
-            className="form-control"
-            value={newSubscription.type}
-            onChange={(e) =>
-              setNewSubscription({ ...newSubscription, type: e.target.value })
-            }
-            required
-          />
+        {/* Create Subscription Form */}
+        <div className="col-md-6">
+          <h3 className="text-primary mb-3">Create New Subscription</h3>
+          <form onSubmit={handleCreateSubscription}>
+            <div className="mb-3">
+              <label className="form-label">Type:</label>
+              <select
+                className="form-select"
+                value={newSubscription.type}
+                onChange={(e) =>
+                  setNewSubscription({ ...newSubscription, type: e.target.value })
+                }
+                required
+              >
+                <option value="">Select Type</option>
+                <option value="PREPAID">PREPAID</option>
+                <option value="POSTPAID">POSTPAID</option>
+              </select>
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Description:</label>
+              <input
+                type="text"
+                className="form-control"
+                value={newSubscription.description}
+                onChange={(e) =>
+                  setNewSubscription({ ...newSubscription, description: e.target.value })
+                }
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Price:</label>
+              <input
+                type="number"
+                step="0.01"
+                className="form-control"
+                value={newSubscription.price}
+                onChange={(e) =>
+                  setNewSubscription({ ...newSubscription, price: e.target.value })
+                }
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Number of Days:</label>
+              <input
+                type="number"
+                className="form-control"
+                value={newSubscription.noOfDays}
+                onChange={(e) =>
+                  setNewSubscription({ ...newSubscription, noOfDays: e.target.value })
+                }
+                required
+              />
+            </div>
+            <button type="submit" className="btn btn-primary">
+              Submit Request
+            </button>
+          </form>
         </div>
-        <div className="mb-3">
-          <label className="form-label">Description:</label>
-          <input
-            type="text"
-            className="form-control"
-            value={newSubscription.description}
-            onChange={(e) =>
-              setNewSubscription({
-                ...newSubscription,
-                description: e.target.value,
-              })
-            }
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Price:</label>
-          <input
-            type="number"
-            step="0.01"
-            className="form-control"
-            value={newSubscription.price}
-            onChange={(e) =>
-              setNewSubscription({ ...newSubscription, price: e.target.value })
-            }
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Number of Days:</label>
-          <input
-            type="number"
-            className="form-control"
-            value={newSubscription.noOfDays}
-            onChange={(e) =>
-              setNewSubscription({
-                ...newSubscription,
-                noOfDays: e.target.value,
-              })
-            }
-            required
-          />
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Create Subscription
-        </button>
-      </form>
+      </div>
     </div>
   );
 };

@@ -25,6 +25,7 @@ const SupplierRegister = () => {
       branchManager: branchManager,
       branchEmail: branchEmail,
       branchPhoneNo: branchPhoneNo,
+      name,
     };
 
     try {
@@ -50,140 +51,194 @@ const SupplierRegister = () => {
   };
 
   return (
-    <div
-      className="container d-flex align-items-center justify-content-center min-vh-100 "
-      style={{ backgroundColor: "beige" ,width:"80%" }}
-    >
-      <div
-        className="bg-white shadow rounded p-4 p-md-5"
-        style={{
-          maxWidth: "1200px",
-          borderColor: "#0033A0",
-          borderWidth: "1px",
-          borderStyle: "solid",
-          backgroundColor: "#FFFDD0",
-        }}
-      >
-        <h2 className="text-center mb-4" style={{ color: "#E4002B" }}>
-          Register
-        </h2>
-        <form onSubmit={handleRegister}>
-          <div className="mb-3">
-            <label
-              htmlFor="name"
-              className="form-label"
-              style={{ color: "#0033A0" }}
-            >
-              Name:
-            </label>
-            <input
-              type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              className="form-control"
-              style={{ borderColor: "#0033A0" }}
-            />
-          </div>
-          <div className="mb-3">
-            <label
-              htmlFor="password"
-              className="form-label"
-              style={{ color: "#0033A0" }}
-            >
-              Password:
-            </label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="form-control"
-              style={{ borderColor: "#0033A0" }}
-            />
-          </div>
-          <div className="mb-3">
-            <label
-              htmlFor="branchLoc"
-              className="form-label"
-              style={{ color: "#0033A0" }}
-            >
-              Branch Location:
-            </label>
-            <input
-              type="text"
-              id="branchLoc"
-              value={branchLoc}
-              onChange={(e) => setBranchLoc(e.target.value)}
-              required
-              className="form-control"
-              style={{ borderColor: "#0033A0" }}
-            />
-          </div>
-          <div className="mb-3">
-            <label
-              htmlFor="branchManager"
-              className="form-label"
-              style={{ color: "#0033A0" }}
-            >
-              Branch Manager:
-            </label>
-            <input
-              type="text"
-              id="branchManager"
-              value={branchManager}
-              onChange={(e) => setBranchManager(e.target.value)}
-              required
-              className="form-control"
-              style={{ borderColor: "#0033A0" }}
-            />
-          </div>
-          <div className="mb-3">
-            <label
-              htmlFor="branchEmail"
-              className="form-label"
-              style={{ color: "#0033A0" }}
-            >
-              Branch Email:
-            </label>
-            <input
-              type="email"
-              id="branchEmail"
-              value={branchEmail}
-              onChange={(e) => setBranchEmail(e.target.value)}
-              required
-              className="form-control"
-              style={{ borderColor: "#0033A0" }}
-            />
-          </div>
-          <div className="mb-3">
-            <label
-              htmlFor="branchPhoneNo"
-              className="form-label"
-              style={{ color: "#0033A0" }}
-            >
-              Branch Phone Number:
-            </label>
-            <input
-              type="tel"
-              id="branchPhoneNo"
-              value={branchPhoneNo}
-              onChange={(e) => setBranchPhoneNo(e.target.value)}
-              required
-              className="form-control"
-              style={{ borderColor: "#0033A0" }}
-            />
-          </div>
-          <button
-            type="submit"
-            className="btn"
-            style={{ backgroundColor: "#0d54ff", color: "white" }}
+    <div className="container-fluid d-flex align-items-center justify-content-center min-vh-100">
+      <div className="row w-100">
+        <div className="col-md-6 d-flex align-items-center justify-content-center">
+          <img
+            src="../telstraLogo1.jpeg"
+            alt="Register"
+            className="img-fluid"
+            style={{ maxHeight: "100vh", objectFit: "cover" }}
+          />
+        </div>
+        <div className="col-md-6 d-flex align-items-center justify-content-center">
+          <div
+            style={{
+              maxWidth: "900px", // Width of the form container
+              padding: "40px",
+              backgroundColor: "#e6f0ff", // Light blue color
+              borderRadius: "8px",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+              borderColor: "#0033A0",
+              borderWidth: "1px",
+              borderStyle: "solid",
+            }}
           >
-            Register
-          </button>
-        </form>
+            <h2 style={{ textAlign: "center", marginBottom: "30px", color: "#0033A0", fontSize: "30px" }}>
+              Register
+            </h2>
+            <form onSubmit={handleRegister}>
+              <div className="row">
+                <div className="col-md-6 mb-3">
+                  <label
+                    htmlFor="name"
+                    style={{ display: "block", marginBottom: "10px", fontWeight: "bold", color: "#0033A0", fontSize: "18px" }}
+                  >
+                    Name:
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    style={{
+                      width: "100%",
+                      padding: "12px",
+                      borderRadius: "4px",
+                      border: "1px solid #0033A0",
+                      fontSize: "16px",
+                    }}
+                  />
+                </div>
+                <div className="col-md-6 mb-3">
+                  <label
+                    htmlFor="password"
+                    style={{ display: "block", marginBottom: "10px", fontWeight: "bold", color: "#0033A0", fontSize: "18px" }}
+                  >
+                    Password:
+                  </label>
+                  <input
+                    type="password"
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    style={{
+                      width: "100%",
+                      padding: "12px",
+                      borderRadius: "4px",
+                      border: "1px solid #0033A0",
+                      fontSize: "16px",
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-6 mb-3">
+                  <label
+                    htmlFor="branchLoc"
+                    style={{ display: "block", marginBottom: "10px", fontWeight: "bold", color: "#0033A0", fontSize: "18px" }}
+                  >
+                    Branch Location:
+                  </label>
+                  <input
+                    type="text"
+                    id="branchLoc"
+                    value={branchLoc}
+                    onChange={(e) => setBranchLoc(e.target.value)}
+                    required
+                    style={{
+                      width: "100%",
+                      padding: "12px",
+                      borderRadius: "4px",
+                      border: "1px solid #0033A0",
+                      fontSize: "16px",
+                    }}
+                  />
+                </div>
+                <div className="col-md-6 mb-3">
+                  <label
+                    htmlFor="branchManager"
+                    style={{ display: "block", marginBottom: "10px", fontWeight: "bold", color: "#0033A0", fontSize: "18px" }}
+                  >
+                    Branch Manager:
+                  </label>
+                  <input
+                    type="text"
+                    id="branchManager"
+                    value={branchManager}
+                    onChange={(e) => setBranchManager(e.target.value)}
+                    required
+                    style={{
+                      width: "100%",
+                      padding: "12px",
+                      borderRadius: "4px",
+                      border: "1px solid #0033A0",
+                      fontSize: "16px",
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-6 mb-3">
+                  <label
+                    htmlFor="branchEmail"
+                    style={{ display: "block", marginBottom: "10px", fontWeight: "bold", color: "#0033A0", fontSize: "18px" }}
+                  >
+                    Branch Email:
+                  </label>
+                  <input
+                    type="email"
+                    id="branchEmail"
+                    value={branchEmail}
+                    onChange={(e) => setBranchEmail(e.target.value)}
+                    required
+                    style={{
+                      width: "100%",
+                      padding: "12px",
+                      borderRadius: "4px",
+                      border: "1px solid #0033A0",
+                      fontSize: "16px",
+                    }}
+                  />
+                </div>
+                <div className="col-md-6 mb-3">
+                  <label
+                    htmlFor="branchPhoneNo"
+                    style={{ display: "block", marginBottom: "10px", fontWeight: "bold", color: "#0033A0", fontSize: "18px" }}
+                  >
+                    Branch Phone Number:
+                  </label>
+                  <input
+                    type="tel"
+                    id="branchPhoneNo"
+                    value={branchPhoneNo}
+                    onChange={(e) => setBranchPhoneNo(e.target.value)}
+                    required
+                    style={{
+                      width: "100%",
+                      padding: "12px",
+                      borderRadius: "4px",
+                      border: "1px solid #0033A0",
+                      fontSize: "16px",
+                    }}
+                  />
+                </div>
+              </div>
+              <button
+                type="submit"
+                style={{
+                  width: "100%",
+                  padding: "12px",
+                  backgroundColor: "#0033A0",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "4px",
+                  cursor: "pointer",
+                  fontSize: "16px",
+                }}
+              >
+                Register
+              </button>
+              <div style={{ textAlign: "center", marginTop: "20px" }}>
+                <a href="/supplierlogin" style={{ color: "#0033A0", textDecoration: "none", fontSize: "16px" }}>
+                  Already have an account? Login
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   );

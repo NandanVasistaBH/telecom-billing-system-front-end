@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 
@@ -8,12 +8,39 @@ const Register = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [supplierId, setSupplierId] = useState(null);
+  const [suppliers, setSuppliers] = useState([]);
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const fetchSuppliers = async () => {
+      try {
+        const response = await fetch("/supplier/all", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+        const data = await response.json();
+        setSuppliers(data);
+      } catch (error) {
+        console.error("Error fetching suppliers:", error);
+      }
+    };
+
+    fetchSuppliers();
+  }, []);
+
   const handleRegister = async (e) => {
     e.preventDefault();
-
+    if (supplierId == null) {
+      alert("Choose a supplier");
+      return;
+    }
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       return;
@@ -28,9 +55,9 @@ const Register = () => {
       custEmail: email,
       custPhoneNo: phoneNumber,
       name: username,
-      supplier:{
-        id:1
-      }
+      supplier: {
+        id: supplierId,
+      },
     };
 
     try {
@@ -56,122 +83,188 @@ const Register = () => {
   };
 
   return (
-    <div
-      className="container d-flex align-items-center justify-content-center min-vh-100"
-      style={{ backgroundColor: "#FFFDD0" }}
-    >
-      <div
-        className="bg-white shadow rounded p-4 p-md-5"
-        style={{
-          maxWidth: "500px",
-          borderColor: "#0033A0",
-          borderWidth: "1px",
-          borderStyle: "solid",
-        }}
-      >
-        <h2 className="text-center mb-4" style={{ color: "#E4002B" }}>
-          Register
-        </h2>
-        <form onSubmit={handleRegister}>
-          
-          <div className="mb-3">
-            <label
-              htmlFor="username"
-              className="form-label"
-              style={{ color: "#0033A0" }}
-            >
-              Username:
-            </label>
-            <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-              className="form-control"
-              style={{ borderColor: "#0033A0" }}
-            />
-          </div>
-          <div className="mb-3">
-            <label
-              htmlFor="email"
-              className="form-label"
-              style={{ color: "#0033A0" }}
-            >
-              Email:
-            </label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="form-control"
-              style={{ borderColor: "#0033A0" }}
-            />
-          </div>
-          <div className="mb-3">
-            <label
-              htmlFor="phoneNumber"
-              className="form-label"
-              style={{ color: "#0033A0" }}
-            >
-              Phone Number:
-            </label>
-            <input
-              type="tel"
-              id="phoneNumber"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              required
-              className="form-control"
-              style={{ borderColor: "#0033A0" }}
-            />
-          </div>
-          <div className="mb-3">
-            <label
-              htmlFor="password"
-              className="form-label"
-              style={{ color: "#0033A0" }}
-            >
-              Password:
-            </label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="form-control"
-              style={{ borderColor: "#0033A0" }}
-            />
-          </div>
-          <div className="mb-3">
-            <label
-              htmlFor="confirmPassword"
-              className="form-label"
-              style={{ color: "#0033A0" }}
-            >
-              Confirm Password:
-            </label>
-            <input
-              type="password"
-              id="confirmPassword"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-              className="form-control"
-              style={{ borderColor: "#0033A0" }}
-            />
-          </div>
-          <button
-            type="submit"
-            className="btn"
-            style={{ backgroundColor: "#E4002B", color: "white" }}
+    <div className="container-fluid d-flex align-items-center justify-content-center min-vh-100">
+      <div className="row w-100">
+        <div className="col-md-6 d-flex align-items-center justify-content-center">
+          <img
+            src="../telstraLogo1.jpeg"
+            alt="Register"
+            className="img-fluid"
+            style={{ maxHeight: "100vh", objectFit: "cover" }}
+          />
+        </div>
+        <div className="col-md-6 d-flex align-items-center justify-content-center">
+          <div
+            style={{
+              maxWidth: "900px", // Match the width of the CustomerLogin component
+              padding: "40px", // Match the padding of the CustomerLogin component
+              backgroundColor: "#ffffff", // White background to match
+              borderRadius: "8px",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+              borderColor: "#0033A0",
+              borderWidth: "1px",
+              borderStyle: "solid",
+            }}
           >
-            Register
-          </button>
-        </form>
+            <h2 style={{ textAlign: "center", marginBottom: "30px", color: "#0033A0", fontSize: "30px" }}>
+              Register
+            </h2>
+            <form onSubmit={handleRegister}>
+              <div style={{ marginBottom: "20px" }}>
+                <label
+                  htmlFor="username"
+                  style={{ display: "block", marginBottom: "10px", fontWeight: "bold", color: "#0033A0", fontSize: "18px" }}
+                >
+                  Username:
+                </label>
+                <input
+                  type="text"
+                  id="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                  style={{
+                    width: "100%",
+                    padding: "12px", // Increased padding
+                    borderRadius: "4px",
+                    border: "1px solid #0033A0", // Match the border color
+                    fontSize: "16px", // Increased font size
+                  }}
+                />
+              </div>
+              <div style={{ marginBottom: "20px" }}>
+                <label
+                  htmlFor="email"
+                  style={{ display: "block", marginBottom: "10px", fontWeight: "bold", color: "#0033A0", fontSize: "18px" }}
+                >
+                  Email:
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  style={{
+                    width: "100%",
+                    padding: "12px", // Increased padding
+                    borderRadius: "4px",
+                    border: "1px solid #0033A0", // Match the border color
+                    fontSize: "16px", // Increased font size
+                  }}
+                />
+              </div>
+              <div style={{ marginBottom: "20px" }}>
+                <label
+                  htmlFor="phoneNumber"
+                  style={{ display: "block", marginBottom: "10px", fontWeight: "bold", color: "#0033A0", fontSize: "18px" }}
+                >
+                  Phone Number:
+                </label>
+                <input
+                  type="tel"
+                  id="phoneNumber"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  required
+                  style={{
+                    width: "100%",
+                    padding: "12px", // Increased padding
+                    borderRadius: "4px",
+                    border: "1px solid #0033A0", // Match the border color
+                    fontSize: "16px", // Increased font size
+                  }}
+                />
+              </div>
+              <div style={{ marginBottom: "20px" }}>
+                <label
+                  htmlFor="password"
+                  style={{ display: "block", marginBottom: "10px", fontWeight: "bold", color: "#0033A0", fontSize: "18px" }}
+                >
+                  Password:
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  style={{
+                    width: "100%",
+                    padding: "12px", // Increased padding
+                    borderRadius: "4px",
+                    border: "1px solid #0033A0", // Match the border color
+                    fontSize: "16px", // Increased font size
+                  }}
+                />
+              </div>
+              <div style={{ marginBottom: "20px" }}>
+                <label
+                  htmlFor="confirmPassword"
+                  style={{ display: "block", marginBottom: "10px", fontWeight: "bold", color: "#0033A0", fontSize: "18px" }}
+                >
+                  Confirm Password:
+                </label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                  style={{
+                    width: "100%",
+                    padding: "12px", // Increased padding
+                    borderRadius: "4px",
+                    border: "1px solid #0033A0", // Match the border color
+                    fontSize: "16px", // Increased font size
+                  }}
+                />
+              </div>
+              <div style={{ marginBottom: "20px" }}>
+                <label
+                  htmlFor="supplierId"
+                  style={{ display: "block", marginBottom: "10px", fontWeight: "bold", color: "#0033A0", fontSize: "18px" }}
+                >
+                  Supplier:
+                </label>
+                <select
+                  value={supplierId || ""}
+                  onChange={(e) => setSupplierId(e.target.value)}
+                  required
+                  style={{
+                    width: "100%",
+                    padding: "12px", // Increased padding
+                    borderRadius: "4px",
+                    border: "1px solid #0033A0", // Match the border color
+                    fontSize: "16px", // Increased font size
+                  }}
+                >
+                  <option value="">Select Supplier</option>
+                  {suppliers.map((supplier) => (
+                    <option key={supplier.id} value={supplier.id}>
+                      {supplier.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <button
+                type="submit"
+                style={{
+                  width: "100%",
+                  padding: "12px", // Increased padding
+                  backgroundColor: "#0033A0", // Match the button color
+                  color: "white",
+                  border: "none",
+                  borderRadius: "4px",
+                  cursor: "pointer",
+                  fontSize: "16px", // Increased font size
+                }}
+              >
+                Register
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   );

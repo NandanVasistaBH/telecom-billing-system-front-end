@@ -30,15 +30,14 @@ const SupplierLogin = () => {
 
       if (response.ok) {
         const jwtToken = await response.text(); // Assuming the token is returned as a plain text
-        if (jwtToken && jwtToken!=="failure") {
+        if (jwtToken && jwtToken !== "failure") {
           localStorage.setItem("jwtToken", jwtToken);
           alert("Login successful!");
           navigate("/SupplierDashboard");
-        }else{
-          alert("wrong username or password")
+        } else {
+          alert("Wrong username or password");
         }
       } else {
-    
         setErrorMessage("Invalid username or password.");
       }
     } catch (error) {
@@ -50,101 +49,109 @@ const SupplierLogin = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        minHeight: "100vh",
-        backgroundColor: "#FFFDD0", // Light beige background
-      }}
-    >
-      <div
-        style={{
-          maxWidth: "400px",
-          padding: "20px",
-          backgroundColor: "#f5ede2", // Beige color
-          borderRadius: "8px",
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-        }}
-      >
-        <h2 style={{ textAlign: "center", marginBottom: "20px", color: "black" }}>
-          Supplier Login
-        </h2>
-        <form onSubmit={handleLogin}>
-          <div style={{ marginBottom: "15px" }}>
-            <label
-              htmlFor="username"
-              style={{ display: "block", marginBottom: "5px", fontWeight: "bold", color: "#0033A0" }}
-            >
-              Username:
-            </label>
-            <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-              style={{
-                width: "100%",
-                padding: "8px",
-                borderRadius: "4px",
-                border: "1px solid #cbd5e0",
-                borderColor: "#0033A0", // Blue color
-              }}
-            />
-          </div>
-          <div style={{ marginBottom: "15px" }}>
-            <label
-              htmlFor="password"
-              style={{ display: "block", marginBottom: "5px", fontWeight: "bold", color: "#0033A0" }}
-            >
-              Password:
-            </label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              style={{
-                width: "100%",
-                padding: "8px",
-                borderRadius: "4px",
-                border: "1px solid #cbd5e0",
-                borderColor: "#0033A0", // Blue color
-              }}
-            />
-          </div>
-          {errorMessage && (
-            <div style={{ marginBottom: "15px" }}>
-              <div style={{ color: "red" }}>{errorMessage}</div>
-            </div>
-          )}
-          <button
-            type="submit"
+    <div className="container-fluid d-flex align-items-center justify-content-center min-vh-100">
+      <div className="row w-100">
+        <div className="col-md-6 d-flex align-items-center justify-content-center">
+          <img
+            src="../telstraLogo1.jpeg"
+            alt="Login"
+            className="img-fluid"
+            style={{ maxHeight: "100vh", objectFit: "cover" }}
+          />
+        </div>
+        <div className="col-md-6 d-flex align-items-center justify-content-center">
+          <div
             style={{
-              width: "100%",
-              padding: "10px",
-              backgroundColor: "rgba(13,84,255,255)",
-              color: "white",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
+              maxWidth: "900px", // Increased width
+              padding: "40px", // Increased padding for better spacing
+              backgroundColor: "#e6f0ff", // Light blue color
+              borderRadius: "8px",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+              borderColor: "#0033A0",
+              borderWidth: "1px",
+              borderStyle: "solid",
             }}
           >
-            Login
-          </button>
-          <div style={{ textAlign: "center", marginTop: "15px" }}>
-            <a href="/forgot-password" style={{ color: "black", textDecoration: "none" }}>
-              Forgot Password?
-            </a>
-            <br />
-            <a href="/supplierregister" style={{ color: "black", textDecoration: "none" }}>
-              Don't have an account? Register
-            </a>
+            <h2 style={{ textAlign: "center", marginBottom: "30px", color: "#0033A0", fontSize: "30px" }}>
+              Supplier Login
+            </h2>
+            <form onSubmit={handleLogin}>
+              <div style={{ marginBottom: "20px" }}>
+                <label
+                  htmlFor="username"
+                  style={{ display: "block", marginBottom: "10px", fontWeight: "bold", color: "#0033A0", fontSize: "18px" }}
+                >
+                  Username:
+                </label>
+                <input
+                  type="text"
+                  id="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                  style={{
+                    width: "100%",
+                    padding: "12px", // Increased padding
+                    borderRadius: "4px",
+                    border: "1px solid #0033A0", // Blue color
+                    fontSize: "16px", // Increased font size
+                  }}
+                />
+              </div>
+              <div style={{ marginBottom: "20px" }}>
+                <label
+                  htmlFor="password"
+                  style={{ display: "block", marginBottom: "10px", fontWeight: "bold", color: "#0033A0", fontSize: "18px" }}
+                >
+                  Password:
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  style={{
+                    width: "100%",
+                    padding: "12px", // Increased padding
+                    borderRadius: "4px",
+                    border: "1px solid #0033A0", // Blue color
+                    fontSize: "16px", // Increased font size
+                  }}
+                />
+              </div>
+              {errorMessage && (
+                <div style={{ marginBottom: "20px" }}>
+                  <div style={{ color: "red", fontSize: "16px" }}>{errorMessage}</div>
+                </div>
+              )}
+              <button
+                type="submit"
+                style={{
+                  width: "100%",
+                  padding: "12px", // Increased padding
+                  backgroundColor: "#0033A0", // Blue color
+                  color: "white",
+                  border: "none",
+                  borderRadius: "4px",
+                  cursor: "pointer",
+                  fontSize: "16px", // Increased font size
+                }}
+              >
+                Login
+              </button>
+              <div style={{ textAlign: "center", marginTop: "20px" }}>
+                <a href="/forgot-password" style={{ color: "#0033A0", textDecoration: "none", fontSize: "16px" }}>
+                  Forgot Password?
+                </a>
+                <br />
+                <a href="/supplierregister" style={{ color: "#0033A0", textDecoration: "none", fontSize: "16px" }}>
+                  Don't have an account? Register
+                </a>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );

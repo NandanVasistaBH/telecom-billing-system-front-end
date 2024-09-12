@@ -18,7 +18,7 @@ import AdminLogin from './Components/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import SupplierRegister from './pages/SupplierRegister';
 import SupplierLogin from './pages/SupplierLogin';
-import SupplierDashboard from './Components/SupplierDashboard';
+import SupplierDashboard from './pages/SupplierDashboard';
 
 function App() {
   return (

@@ -374,24 +374,23 @@
                         Your Details
                       </h2>
                       <div className="d-flex flex-column align-items-center">
-                        <p>
-                          <strong>Name:</strong> {userDetails.name}
-                        </p>
-                        <p>
-                          <strong>Email:</strong> {userDetails.custEmail}
-                        </p>
-                        <p>
-                          <strong>Phone Number:</strong>{" "}
-                          {userDetails.custPhoneNo}
-                        </p>
-                        {/* <Button
-                          variant="primary"
-                          onClick={() => navigate("/profile")}
-                          className="mt-3"
-                        >
-                          Edit Profile
-                        </Button> */}
-                      </div>
+                      <p style={{ color: "#333" }}>
+                        <strong>Name:</strong> {userDetails.name}
+                      </p>
+                      <p style={{ color: "#333" }}>
+                        <strong>Email:</strong> {userDetails.custEmail}
+                      </p>
+                      <p style={{ color: "#333" }}>
+                        <strong>Phone Number:</strong> {userDetails.custPhoneNo}
+                      </p>
+                      {/* <Button
+                        variant="primary"
+                        onClick={() => navigate("/profile")}
+                        className="mt-3"
+                      >
+                        Edit Profile
+                      </Button> */}
+                    </div>
                     </Card>
                   </Col>
                 </Row>
