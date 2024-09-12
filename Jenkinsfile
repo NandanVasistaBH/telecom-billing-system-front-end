@@ -29,18 +29,16 @@ pipeline {
         }
         stage('Build React App') {
             steps {
-                script {
-                    def binPath = "${env.WORKSPACE}/node_modules/.bin"
-                    bat "set PATH=%PATH%;${binPath}"
-                    bat 'npm run build'
-                }
-            }
-        }
-        stage('Build React App') {
-            steps {
                 bat 'npx react-scripts build'
             }
         }
-
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    def imageName = 'my-react-app'
+                    bat "docker build -t ${imageName} ."
+                }
+            }
+        }
     }
 }
