@@ -3,12 +3,15 @@ import { useNavigate,Link } from "react-router-dom";
 import {
   Container,
   Navbar,
+  Nav,
+  NavDropdown
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 
 const Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [isUsernameUnique, setIsUsernameUnique] = useState(true); // New state for username uniqueness
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -16,6 +19,10 @@ const Register = () => {
   const [suppliers, setSuppliers] = useState([]);
 
   const navigate = useNavigate();
+
+  const handlePlanSelection = (planType) => {
+    navigate(`/${planType}`);
+  };
 
   useEffect(() => {
     const fetchSuppliers = async () => {
@@ -38,6 +45,22 @@ const Register = () => {
 
     fetchSuppliers();
   }, []);
+
+  const checkUsernameUnique = async (username) => {
+    if (username.trim() === "") return;
+    try {
+      const response = await fetch(`/customer/is-name-unique?name=${username}`);
+      const isUnique = await response.json();
+      setIsUsernameUnique(isUnique); // Set state based on API response
+    } catch (error) {
+      console.error("Error checking username uniqueness:", error);
+      setIsUsernameUnique(false);
+    }
+  };
+
+  useEffect(() => {
+    checkUsernameUnique(username);
+  }, [username]);
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -96,12 +119,57 @@ const Register = () => {
               alt="Telstra Logo"
               style={{ width: "50px", height: "auto" }}
             />
-            <span className="ms-2" style={{ color: "#FFFDD0" }}>
+            <span className="ms-2" style={{ color: "#FFFDD0" }} onClick={() => navigate("/")}>
               TeleBillPro
             </span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
+          <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+                <NavDropdown title="View Plans" id="basic-nav-dropdown">
+                  <NavDropdown.Item
+                    onClick={() => handlePlanSelection("prepaid")}
+                  >
+                    Prepaid
+                  </NavDropdown.Item>
+                  <NavDropdown.Item
+                    onClick={() => handlePlanSelection("postpaid")}
+                  >
+                    Postpaid
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </Nav>
+          <Nav className="ms-auto" style={{ alignItems: 'center', flexDirection: 'column' }}>
+            <div style={{ display: 'flex', gap: '15px', marginTop: '10px' }}>
+              <button
+                onClick={() => navigate(-1)}
+                style={{
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  color: '#FFFDD0',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center'
+                }}
+              >
+                <span style={{ marginTop: '5px' }}>←</span>
+              </button>
+              <button
+                onClick={() => navigate(1)}
+                style={{
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  color: '#FFFDD0',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center'
+                }}
+              >
+                <span style={{ marginTop: '5px' }}>→</span>
+              </button>
+            </div>
+          </Nav>
+        </Navbar.Collapse>
         </Container>
       </Navbar>
       <div
@@ -173,6 +241,11 @@ const Register = () => {
                         fontSize: "16px", // Increased font size
                       }}
                     />
+                    {!isUsernameUnique && (
+                      <p style={{ color: "red" }}>
+                        Username is already taken. Please choose another.
+                      </p>
+                    )}
                   </div>
                   <div style={{ marginBottom: "20px" }}>
                     <label
@@ -334,6 +407,18 @@ const Register = () => {
                   >
                     Register
                   </button>
+                  <div style={{ textAlign: "center", marginTop: "20px" }}>
+                  <a
+                    href="/login"
+                    style={{
+                      color: "#0033A0",
+                      textDecoration: "none",
+                      fontSize: "16px",
+                    }}
+                  >
+                    Already have an account? Login
+                  </a>
+                </div>
                 </form>
               </div>
             </div>

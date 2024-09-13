@@ -29,6 +29,8 @@
     const [paymentGateway] = useState("RazorPay");
     const navigate = useNavigate();
 
+    
+
     useEffect(() => {
       const loadRazorpayScript = () => {
         const script = document.createElement("script");
@@ -40,6 +42,12 @@
       const token = localStorage.getItem("jwtToken");
       const storedUserName = localStorage.getItem("username");
 
+      const user = localStorage.getItem("user");
+
+      if(user==="admin" || user==="supplier"){
+        navigate("/login");
+        return;
+      }
       if (token) {
         fetch("http://localhost:10000/customer/details-from-token", {
           method: "GET",
@@ -95,8 +103,12 @@
     };
 
     const handleGeneratePDF = (invoiceId) => {
+      if(!invoiceId) {
+        alert("the specified invoice doesn't exist")
+        return
+      }
      const token = localStorage.getItem("jwtToken");
-     fetch(`http://localhost:5001/pdf/invoice/${invoiceId}`, {
+     fetch(`http://localhost:10000/pdf/create?invoiceId=${invoiceId}`, {
        method: "GET",
        headers: {
          "Content-Type": "application/json",
@@ -231,7 +243,11 @@
       }
     };
 
-
+    const handleLogout=()=>{
+      // localStorage.setItem("jwtToken",null);
+      localStorage.removeItem("jwtToken")
+      localStorage.removeItem("user")
+    }
     const handleViewChange = (type) => {
       setSelectedInvoiceType(type);
     };
@@ -312,7 +328,7 @@
                 alt="Telstra Logo"
                 style={{ width: "50px", height: "auto" }}
               />
-              <span className="ms-2" style={{ color: "#FFFDD0" }}>
+              <span className="ms-2" style={{ color: "#FFFDD0" }} onClick={() => navigate("/")}>
                 TeleBillPro
               </span>
             </Navbar.Brand>
@@ -332,10 +348,38 @@
                   </NavDropdown.Item>
                 </NavDropdown>
               </Nav>
-              <Nav className="ms-auto">
-                <Nav.Link href="/login" style={{ color: "#FFFDD0" }}>
+              <Nav className="ms-auto" style={{ alignItems: 'center', flexDirection: 'column' }}>
+                <Nav.Link onClick={handleLogout} href="/login" style={{ color: "#FFFDD0" }}>
                   Logout
                 </Nav.Link>
+                <div style={{ display: 'flex', gap: '15px', marginTop: '10px' }}>
+                  <button
+                    onClick={() => navigate(-1)}
+                    style={{
+                      backgroundColor: 'transparent',
+                      border: 'none',
+                      color: '#FFFDD0',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center'
+                    }}
+                  >
+                    <span style={{ marginTop: '5px' }}>←</span>
+                  </button>
+                  <button
+                    onClick={() => navigate(1)}
+                    style={{
+                      backgroundColor: 'transparent',
+                      border: 'none',
+                      color: '#FFFDD0',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center'
+                    }}
+                  >
+                    <span style={{ marginTop: '5px' }}>→</span>
+                  </button>
+                </div>
               </Nav>
             </Navbar.Collapse>
           </Container>

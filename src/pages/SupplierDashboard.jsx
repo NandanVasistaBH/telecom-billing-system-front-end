@@ -8,7 +8,7 @@ import {
   Navbar,
   Nav,
 } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const SupplierDashboard = () => {
   const [supplierDetails, setSupplierDetails] = useState(null);
@@ -18,6 +18,12 @@ const SupplierDashboard = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
+    const user = localStorage.getItem("user");
+
+    if(user==="admin" || user==="customer"){
+      navigate("/supplierlogin")
+      return;
+    }
     const fetchSupplierDetails = async () => {
       if (token) {
         try {
@@ -42,6 +48,11 @@ const SupplierDashboard = () => {
 
     fetchSupplierDetails();
   }, []);
+
+  const handleLogout=()=>{
+    localStorage.removeItem("jwtToken")
+    localStorage.removeItem("user");
+  }
 
   const fetchCustomers = async () => {
     if (!supplierDetails) return;
@@ -74,7 +85,8 @@ const SupplierDashboard = () => {
       <Navbar bg="primary" variant="dark" expand="lg">
         <Container>
           <Navbar.Brand
-            onClick={() => navigate("/")}
+            as={Link} 
+            to="/"
             className="d-flex align-items-center"
           >
             <img
@@ -82,18 +94,46 @@ const SupplierDashboard = () => {
               alt="Telstra Logo"
               style={{ width: "50px", height: "auto" }}
             />
-            <span className="ms-2" style={{ color: "#FFFDD0" }}>
+            <span className="ms-2" style={{ color: "#FFFDD0" }} onClick={() => navigate("/")}>
               TeleBillPro
             </span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ms-auto">
-              <Nav.Link href="/login" style={{ color: "#FFFDD0" }}>
-                Logout
-              </Nav.Link>
-            </Nav>
-          </Navbar.Collapse>
+          <Nav className="ms-auto" style={{ alignItems: 'center', flexDirection: 'column' }}>
+            <Nav.Link onClick={handleLogout} href="/supplierlogin" style={{ color: "#FFFDD0" }}>
+              Logout
+            </Nav.Link>
+            <div style={{ display: 'flex', gap: '15px', marginTop: '10px' }}>
+              <button
+                onClick={() => navigate(-1)}
+                style={{
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  color: '#FFFDD0',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center'
+                }}
+              >
+                <span style={{ marginTop: '5px' }}>←</span>
+              </button>
+              <button
+                onClick={() => navigate(1)}
+                style={{
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  color: '#FFFDD0',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center'
+                }}
+              >
+                <span style={{ marginTop: '5px' }}>→</span>
+              </button>
+            </div>
+          </Nav>
+        </Navbar.Collapse>
         </Container>
       </Navbar>
 

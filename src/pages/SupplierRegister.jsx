@@ -3,6 +3,7 @@ import { useNavigate,Link } from "react-router-dom";
 import {
   Container,
   Navbar,
+  Nav,
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 
@@ -64,12 +65,43 @@ const SupplierRegister = () => {
               alt="Telstra Logo"
               style={{ width: "50px", height: "auto" }}
             />
-            <span className="ms-2" style={{ color: "#FFFDD0" }}>
+            <span className="ms-2" style={{ color: "#FFFDD0" }} onClick={() => navigate("/")}>
               TeleBillPro
             </span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
+          <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ms-auto" style={{ alignItems: 'center', flexDirection: 'column' }}>
+            <div style={{ display: 'flex', gap: '15px', marginTop: '10px' }}>
+              <button
+                onClick={() => navigate(-1)}
+                style={{
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  color: '#FFFDD0',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center'
+                }}
+              >
+                <span style={{ marginTop: '5px' }}>←</span>
+              </button>
+              <button
+                onClick={() => navigate(1)}
+                style={{
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  color: '#FFFDD0',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center'
+                }}
+              >
+                <span style={{ marginTop: '5px' }}>→</span>
+              </button>
+            </div>
+          </Nav>
+        </Navbar.Collapse>
         </Container>
       </Navbar>
       <div

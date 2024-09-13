@@ -1,7 +1,13 @@
 /// src/Components/TelecomBillingSystem.js
 import React, { useState } from 'react';
 import { User, Building2, Shield, ChevronDown } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
+import {
+  Container,
+  Navbar,
+  Nav,
+  NavDropdown,
+} from "react-bootstrap";
 import './TelecomBillingSystem.css';
 import RechargeForm from './RechargeForm';
 import FlashcardsList from './FlashcardsList';
@@ -16,6 +22,7 @@ const TelecomBillingSystem = () => {
   const [openDropdown, setOpenDropdown] = useState(null);
   const [selectedDropdownOption, setSelectedDropdownOption] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const navigate = useNavigate();
  
   const [prepaidopen,setPrepaidopen]=useState(false);
   const userRoles = [
@@ -36,12 +43,11 @@ const TelecomBillingSystem = () => {
       setModalOpen(true);
     }
   };
- 
-  const handleRecharge = (mobileNumber) => {
-    // Handle the recharge process
-    console.log(`Recharge initiated for number: ${mobileNumber}`);
-    // You can add additional logic for processing the recharge
+  
+  const handlePlanSelection = (planType) => {
+    navigate(`/${planType}`);
   };
+  
  
   return (
     <div className="telecom-billing-system">
@@ -69,38 +75,30 @@ const TelecomBillingSystem = () => {
           {selectedRole === 'customer' && (
             <>
 
-              {/* <div className="dropdown">
-                 <button
-                  onClick={() => toggleDropdown('prepaid')}
-                  className="dropdown-button"
-                >
-                  Prepaid <ChevronDown className="icon" size={20} />
-                </button>
-                {openDropdown === 'prepaid' && (
-                  <div className="dropdown-content">
-                    <button onClick={() =>{ handleDropdownClick('prepaid-plans');
-                    
-        
-                    }
-                    }>Prepaid Plans</button>
-                    <button onClick={() => handleDropdownClick('prepaid-recharge')}>Recharge</button>
-                  </div>
-                )}
-              </div> 
-              <div className="dropdown">
+              {<div className="dropdown">
                 <button
-                  onClick={() => toggleDropdown('postpaid')}
+                  onClick={() => toggleDropdown('viewPlans')}
                   className="dropdown-button"
                 >
-                  Postpaid <ChevronDown className="icon" size={20} />
+                  View Plans <ChevronDown className="icon" size={20} />
                 </button>
-                {openDropdown === 'postpaid' && (
+                {openDropdown === 'viewPlans' && (
                   <div className="dropdown-content">
-                    <button onClick={() => handleDropdownClick('postpaid-plans')}>Postpaid Plans</button>
-                    <button onClick={() => handleDropdownClick('postpaid-recharge')}>Bill Payment</button>
+                    <button
+                      onClick={() => handlePlanSelection("prepaid")}
+                      className="dropdown-item"
+                    >
+                      Prepaid
+                    </button>
+                    <button
+                      onClick={() => handlePlanSelection("postpaid")}
+                      className="dropdown-item"
+                    >
+                      Postpaid
+                    </button>
                   </div>
                 )}
-              </div> */}
+              </div>}
               <div className="dropdown">
                 <button
                   onClick={() => toggleDropdown('account')}
@@ -200,10 +198,10 @@ const TelecomBillingSystem = () => {
           <RechargeForm />
         )}
          {selectedRole === 'admin'  && (
-          <AdminLogin />
+          navigate("/adminlogin")
         )}
          {selectedRole === 'supplier'  && (
-          <SupplierRegister />
+          navigate("/supplierlogin")
         )}
         {!selectedRole && (
           <div className="content center">
@@ -212,11 +210,7 @@ const TelecomBillingSystem = () => {
         )} 
       </div>
  
-       <RechargeModal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        onRecharge={handleRecharge}
-      /> 
+       
     </div>
   );
 };

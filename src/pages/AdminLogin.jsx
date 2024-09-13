@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Container, Navbar } from "react-bootstrap";
+import { useNavigate, Link } from "react-router-dom";
+import { Container, Navbar, Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 
 const AdminLogin = () => {
@@ -42,6 +42,7 @@ const AdminLogin = () => {
         if (jwtToken && jwtToken !== "failure") {
           // Store the token in localStorage or sessionStorage
           localStorage.setItem("jwtToken", jwtToken);
+          localStorage.setItem("user","admin");
           alert("Login successful!");
           navigate("/admindashboard");
         } else {
@@ -63,18 +64,50 @@ const AdminLogin = () => {
     <>
       <Navbar bg="primary" variant="dark" expand="lg">
         <Container>
-          <Navbar.Brand href="/" className="d-flex align-items-center">
+          <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
             <img
               src="/telstraLogo1.jpeg"
               alt="Telstra Logo"
               style={{ width: "50px", height: "auto" }}
             />
-            <span className="ms-2" style={{ color: "#FFFDD0" }}>
+            <span className="ms-2" style={{ color: "#FFFDD0" }} onClick={() => navigate("/")}>
               TeleBillPro
             </span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ms-auto" style={{ alignItems: 'center', flexDirection: 'column' }}>
+              <div style={{ display: 'flex', gap: '15px', marginTop: '10px' }}>
+                <button
+                  onClick={() => navigate(-1)}
+                  style={{
+                    backgroundColor: 'transparent',
+                    border: 'none',
+                    color: '#FFFDD0',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center'
+                  }}
+                >
+                  <span style={{ marginTop: '5px' }}>←</span>
+                </button>
+                <button
+                  onClick={() => navigate(1)}
+                  style={{
+                    backgroundColor: 'transparent',
+                    border: 'none',
+                    color: '#FFFDD0',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center'
+                  }}
+                >
+                  <span style={{ marginTop: '5px' }}>→</span>
+                </button>
+              </div>
+            </Nav>
+          </Navbar.Collapse>
+
         </Container>
       </Navbar>
 
@@ -200,29 +233,7 @@ const AdminLogin = () => {
                   >
                     Login
                   </button>
-                  <div style={{ textAlign: "center", marginTop: "20px" }}>
-                    <a
-                      href="/forgot-password"
-                      style={{
-                        color: "#0033A0",
-                        textDecoration: "none",
-                        fontSize: "16px",
-                      }}
-                    >
-                      Forgot Password?
-                    </a>
-                    <br />
-                    <a
-                      href="/register"
-                      style={{
-                        color: "#0033A0",
-                        textDecoration: "none",
-                        fontSize: "16px",
-                      }}
-                    >
-                      Don't have an account? Register
-                    </a>
-                  </div>
+                  
                 </form>
               </div>
             </div>

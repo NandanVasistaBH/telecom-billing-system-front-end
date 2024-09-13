@@ -3,6 +3,8 @@ import { useNavigate,Link } from "react-router-dom";
 import {
   Container,
   Navbar,
+  Nav,
+  NavDropdown,
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 
@@ -10,7 +12,12 @@ const CustomerLogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  
   const navigate = useNavigate();
+
+  const handlePlanSelection = (planType) => {
+    navigate(`/${planType}`);
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -23,6 +30,7 @@ const CustomerLogin = () => {
       },
     };
 
+    
     try {
       const response = await fetch("http://localhost:10000/customer/login", {
         method: "POST",
@@ -36,6 +44,7 @@ const CustomerLogin = () => {
         const jwtToken = await response.text(); // Assuming the token is returned as a plain text
         if (jwtToken && jwtToken !== "failure") {
           localStorage.setItem("jwtToken", jwtToken);
+          localStorage.setItem("user","customer");
           alert("Login successful!");
           navigate("/CustomerDashboard");
         } else {
@@ -66,13 +75,58 @@ const CustomerLogin = () => {
                 alt="Telstra Logo"
                 style={{ width: "50px", height: "auto" }}
               />
-              <span className="ms-2" style={{ color: "#FFFDD0" }}>
+              <span className="ms-2" style={{ color: "#FFFDD0" }} onClick={() => navigate("/")}>
                 TeleBillPro
               </span>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
-            </Navbar.Collapse>
+              <Nav className="me-auto">
+                <NavDropdown title="View Plans" id="basic-nav-dropdown">
+                  <NavDropdown.Item
+                    onClick={() => handlePlanSelection("prepaid")}
+                  >
+                    Prepaid
+                  </NavDropdown.Item>
+                  <NavDropdown.Item
+                    onClick={() => handlePlanSelection("postpaid")}
+                  >
+                    Postpaid
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </Nav>
+            <Nav className="ms-auto" style={{ alignItems: 'center', flexDirection: 'column' }}>
+              <div style={{ display: 'flex', gap: '15px', marginTop: '10px' }}>
+                <button
+                  onClick={() => navigate(-1)}
+                  style={{
+                    backgroundColor: 'transparent',
+                    border: 'none',
+                    color: '#FFFDD0',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center'
+                  }}
+                >
+                  <span style={{ marginTop: '5px' }}>←</span>
+                </button>
+                <button
+                  onClick={() => navigate(1)}
+                  style={{
+                    backgroundColor: 'transparent',
+                    border: 'none',
+                    color: '#FFFDD0',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center'
+                  }}
+                >
+                  <span style={{ marginTop: '5px' }}>→</span>
+                </button>
+              </div>
+            </Nav>
+          </Navbar.Collapse>
+
           </Container>
       </Navbar>
       
