@@ -1,17 +1,14 @@
 import React, { useState } from "react";
-import { useNavigate,Link } from "react-router-dom";
-import {
-  Container,
-  Navbar,
-  Nav,
-  NavDropdown,
-} from "react-bootstrap";
+import { useNavigate, Link } from "react-router-dom";
+import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
+import Confetti from "react-confetti"; // Import Confetti component
 
 const CustomerLogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [showConfetti, setShowConfetti] = useState(false); // State for managing confetti display
   
   const navigate = useNavigate();
 
@@ -30,7 +27,6 @@ const CustomerLogin = () => {
       },
     };
 
-    
     try {
       const response = await fetch("http://localhost:10000/customer/login", {
         method: "POST",
@@ -44,9 +40,11 @@ const CustomerLogin = () => {
         const jwtToken = await response.text(); // Assuming the token is returned as a plain text
         if (jwtToken && jwtToken !== "failure") {
           localStorage.setItem("jwtToken", jwtToken);
-          localStorage.setItem("user","customer");
-          alert("Login successful!");
-          navigate("/CustomerDashboard");
+          localStorage.setItem("user", "customer");
+          setShowConfetti(true); // Trigger confetti effect
+          setTimeout(() => {
+            navigate("/CustomerDashboard");
+          }, 3000); // Delay navigation to allow confetti to be visible
         } else {
           alert("Wrong password or username");
         }
@@ -63,38 +61,31 @@ const CustomerLogin = () => {
 
   return (
     <>
-    <Navbar bg="primary" variant="dark" expand="lg">
-          <Container>
-            <Navbar.Brand
-              as={Link}
-              to="/"
-              className="d-flex align-items-center"
-            >
-              <img
-                src="/telstraLogo1.jpeg"
-                alt="Telstra Logo"
-                style={{ width: "50px", height: "auto" }}
-              />
-              <span className="ms-2" style={{ color: "#FFFDD0" }} onClick={() => navigate("/")}>
-                TeleBillPro
-              </span>
-            </Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="me-auto">
-                <NavDropdown title="View Plans" id="basic-nav-dropdown">
-                  <NavDropdown.Item
-                    onClick={() => handlePlanSelection("prepaid")}
-                  >
-                    Prepaid
-                  </NavDropdown.Item>
-                  <NavDropdown.Item
-                    onClick={() => handlePlanSelection("postpaid")}
-                  >
-                    Postpaid
-                  </NavDropdown.Item>
-                </NavDropdown>
-              </Nav>
+      {showConfetti && <Confetti /> /* Conditionally render Confetti component */}
+      <Navbar bg="primary" variant="dark" expand="lg">
+        <Container>
+          <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
+            <img
+              src="/telstraLogo1.jpeg"
+              alt="Telstra Logo"
+              style={{ width: "50px", height: "auto" }}
+            />
+            <span className="ms-2" style={{ color: "#FFFDD0" }} onClick={() => navigate("/")}>
+              TeleBillPro
+            </span>
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              <NavDropdown title="View Plans" id="basic-nav-dropdown">
+                <NavDropdown.Item onClick={() => handlePlanSelection("prepaid")}>
+                  Prepaid
+                </NavDropdown.Item>
+                <NavDropdown.Item onClick={() => handlePlanSelection("postpaid")}>
+                  Postpaid
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
             <Nav className="ms-auto" style={{ alignItems: 'center', flexDirection: 'column' }}>
               <div style={{ display: 'flex', gap: '15px', marginTop: '10px' }}>
                 <button
@@ -126,159 +117,158 @@ const CustomerLogin = () => {
               </div>
             </Nav>
           </Navbar.Collapse>
-
-          </Container>
+        </Container>
       </Navbar>
       
-    <div
-      style={{
-        background:
-          "radial-gradient(circle, rgba(230,245,255,1) 0%, rgba(255,255,255,1) 100%)",
-        minHeight: "100vh",
-        padding: "30px",
-      }}
-    >
-      <div className="container-fluid d-flex align-items-center justify-content-center min-vh-100">
-        <div className="row w-100">
-          <div className="col-md-6 d-flex align-items-center justify-content-center">
-            <img
-              src="../telstraLogo1.jpeg"
-              alt="Login"
-              className="img-fluid"
-              style={{ maxHeight: "100vh", objectFit: "cover" }}
-            />
-          </div>
-          <div className="col-md-6 d-flex align-items-center justify-content-center">
-            <div
-              style={{
-                maxWidth: "900px", // Increased width for larger login box
-                padding: "40px", // Increased padding for better spacing
-                backgroundColor: "#ffffff", // Original color
-                borderRadius: "8px",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-                borderColor: "#0033A0",
-                borderWidth: "1px",
-                borderStyle: "solid",
-              }}
-            >
-              <h2
+      <div
+        style={{
+          background:
+            "radial-gradient(circle, rgba(230,245,255,1) 0%, rgba(255,255,255,1) 100%)",
+          minHeight: "100vh",
+          padding: "30px",
+        }}
+      >
+        <div className="container-fluid d-flex align-items-center justify-content-center min-vh-100">
+          <div className="row w-100">
+            <div className="col-md-6 d-flex align-items-center justify-content-center">
+              <img
+                src="../telstraLogo1.jpeg"
+                alt="Login"
+                className="img-fluid"
+                style={{ maxHeight: "100vh", objectFit: "cover" }}
+              />
+            </div>
+            <div className="col-md-6 d-flex align-items-center justify-content-center">
+              <div
                 style={{
-                  textAlign: "center",
-                  marginBottom: "30px",
-                  color: "#0033A0",
-                  fontSize: "30px",
+                  maxWidth: "900px", // Increased width for larger login box
+                  padding: "40px", // Increased padding for better spacing
+                  backgroundColor: "#ffffff", // Original color
+                  borderRadius: "8px",
+                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                  borderColor: "#0033A0",
+                  borderWidth: "1px",
+                  borderStyle: "solid",
                 }}
               >
-                Login
-              </h2>
-              <form onSubmit={handleLogin}>
-                <div style={{ marginBottom: "20px" }}>
-                  <label
-                    htmlFor="username"
-                    style={{
-                      display: "block",
-                      marginBottom: "10px",
-                      fontWeight: "bold",
-                      color: "#0033A0",
-                      fontSize: "18px",
-                    }}
-                  >
-                    Username:
-                  </label>
-                  <input
-                    type="text"
-                    id="username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                    style={{
-                      width: "100%",
-                      padding: "12px", // Increased padding
-                      borderRadius: "4px",
-                      border: "1px solid #0033A0", // Original border color
-                      fontSize: "16px", // Increased font size
-                    }}
-                  />
-                </div>
-                <div style={{ marginBottom: "20px" }}>
-                  <label
-                    htmlFor="password"
-                    style={{
-                      display: "block",
-                      marginBottom: "10px",
-                      fontWeight: "bold",
-                      color: "#0033A0",
-                      fontSize: "18px",
-                    }}
-                  >
-                    Password:
-                  </label>
-                  <input
-                    type="password"
-                    id="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    style={{
-                      width: "100%",
-                      padding: "12px", // Increased padding
-                      borderRadius: "4px",
-                      border: "1px solid #0033A0", // Original border color
-                      fontSize: "16px", // Increased font size
-                    }}
-                  />
-                </div>
-                {errorMessage && (
-                  <div style={{ marginBottom: "20px" }}>
-                    <div style={{ color: "red", fontSize: "16px" }}>
-                      {errorMessage}
-                    </div>
-                  </div>
-                )}
-                <button
-                  type="submit"
+                <h2
                   style={{
-                    width: "100%",
-                    padding: "12px", // Increased padding
-                    backgroundColor: "#0033A0", // Original button color
-                    color: "white",
-                    border: "none",
-                    borderRadius: "4px",
-                    cursor: "pointer",
-                    fontSize: "16px", // Increased font size
+                    textAlign: "center",
+                    marginBottom: "30px",
+                    color: "#0033A0",
+                    fontSize: "30px",
                   }}
                 >
                   Login
-                </button>
-                <div style={{ textAlign: "center", marginTop: "20px" }}>
-                  <a
-                    href="/forgot-password"
+                </h2>
+                <form onSubmit={handleLogin}>
+                  <div style={{ marginBottom: "20px" }}>
+                    <label
+                      htmlFor="username"
+                      style={{
+                        display: "block",
+                        marginBottom: "10px",
+                        fontWeight: "bold",
+                        color: "#0033A0",
+                        fontSize: "18px",
+                      }}
+                    >
+                      Username:
+                    </label>
+                    <input
+                      type="text"
+                      id="username"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      required
+                      style={{
+                        width: "100%",
+                        padding: "12px", // Increased padding
+                        borderRadius: "4px",
+                        border: "1px solid #0033A0", // Original border color
+                        fontSize: "16px", // Increased font size
+                      }}
+                    />
+                  </div>
+                  <div style={{ marginBottom: "20px" }}>
+                    <label
+                      htmlFor="password"
+                      style={{
+                        display: "block",
+                        marginBottom: "10px",
+                        fontWeight: "bold",
+                        color: "#0033A0",
+                        fontSize: "18px",
+                      }}
+                    >
+                      Password:
+                    </label>
+                    <input
+                      type="password"
+                      id="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                      style={{
+                        width: "100%",
+                        padding: "12px", // Increased padding
+                        borderRadius: "4px",
+                        border: "1px solid #0033A0", // Original border color
+                        fontSize: "16px", // Increased font size
+                      }}
+                    />
+                  </div>
+                  {errorMessage && (
+                    <div style={{ marginBottom: "20px" }}>
+                      <div style={{ color: "red", fontSize: "16px" }}>
+                        {errorMessage}
+                      </div>
+                    </div>
+                  )}
+                  <button
+                    type="submit"
                     style={{
-                      color: "#0033A0",
-                      textDecoration: "none",
-                      fontSize: "16px",
+                      width: "100%",
+                      padding: "12px", // Increased padding
+                      backgroundColor: "#0033A0", // Original button color
+                      color: "white",
+                      border: "none",
+                      borderRadius: "4px",
+                      cursor: "pointer",
+                      fontSize: "16px", // Increased font size
                     }}
                   >
-                    Forgot Password?
-                  </a>
-                  <br />
-                  <a
-                    href="/register"
-                    style={{
-                      color: "#0033A0",
-                      textDecoration: "none",
-                      fontSize: "16px",
-                    }}
-                  >
-                    Don't have an account? Register
-                  </a>
-                </div>
-              </form>
+                    Login
+                  </button>
+                  <div style={{ textAlign: "center", marginTop: "20px" }}>
+                    <a
+                      href="/forgot-password"
+                      style={{
+                        color: "#0033A0",
+                        textDecoration: "none",
+                        fontSize: "16px",
+                      }}
+                    >
+                      Forgot Password?
+                    </a>
+                    <br />
+                    <a
+                      href="/register"
+                      style={{
+                        color: "#0033A0",
+                        textDecoration: "none",
+                        fontSize: "16px",
+                      }}
+                    >
+                      Don't have an account? Register
+                    </a>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
     </>
   );
 };

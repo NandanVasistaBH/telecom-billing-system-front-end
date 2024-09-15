@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-  Button,
-  Navbar,
-  Nav,
-} from "react-bootstrap";
+import { Container, Row, Col, Card, Button, Navbar, Nav } from "react-bootstrap";
+import Confetti from "react-confetti";
 
 const PostpaidRecharge = () => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
+  const [showConfetti, setShowConfetti] = useState(false); // State for managing confetti display
   const navigate = useNavigate();
   const location = useLocation();
   const { userDetails } = location.state || {}; // Retrieve userDetails from location.state
@@ -20,7 +14,6 @@ const PostpaidRecharge = () => {
   useEffect(() => {
     const fetchSubscriptions = async () => {
       try {
-
         const response = await fetch(
           "http://localhost:10000/subscriptions/postpaid",
           {
@@ -47,24 +40,42 @@ const PostpaidRecharge = () => {
 
   const handleRechargeClick = (subscription) => {
     const token = localStorage.getItem("jwtToken");
-    if (token && localStorage.getItem("user")==="customer") {
-      navigate("/recharge", { state: { subscription, userDetails } });
+    if (token && localStorage.getItem("user") === "customer") {
+      setShowConfetti(true); // Trigger confetti effect
+      setTimeout(() => {
+        navigate("/recharge", { state: { subscription, userDetails } });
+      }, 3000); // Delay navigation to allow confetti to be visible
     } else {
       localStorage.removeItem("user");
       localStorage.removeItem("jwtToken");
       navigate("/login");
     }
   };
-  
+
   return (
     <>
+      {showConfetti && (
+        <>
+          <Confetti
+            width={window.innerWidth}
+            height={window.innerHeight}
+            recycle={false}
+            numberOfPieces={100}
+            confettiSource={{ x: 0, y: 0, w: window.innerWidth / 2, h: window.innerHeight }}
+          />
+          <Confetti
+            width={window.innerWidth}
+            height={window.innerHeight}
+            recycle={false}
+            numberOfPieces={100}
+            confettiSource={{ x: window.innerWidth / 2, y: 0, w: window.innerWidth / 2, h: window.innerHeight }}
+          />
+        </>
+      )}
       {/* Navbar */}
       <Navbar bg="primary" variant="dark" expand="lg">
         <Container>
-          <Navbar.Brand
-            as={Link} to="/"
-            className="d-flex align-items-center"
-          >
+          <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
             <img
               src="/telstraLogo1.jpeg"
               alt="Telstra Logo"
@@ -76,37 +87,37 @@ const PostpaidRecharge = () => {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto" style={{ alignItems: 'center', flexDirection: 'column' }}>
-            <div style={{ display: 'flex', gap: '15px', marginTop: '10px' }}>
-              <button
-                onClick={() => navigate(-1)}
-                style={{
-                  backgroundColor: 'transparent',
-                  border: 'none',
-                  color: '#FFFDD0',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center'
-                }}
-              >
-                <span style={{ marginTop: '5px' }}>←</span>
-              </button>
-              <button
-                onClick={() => navigate(1)}
-                style={{
-                  backgroundColor: 'transparent',
-                  border: 'none',
-                  color: '#FFFDD0',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center'
-                }}
-              >
-                <span style={{ marginTop: '5px' }}>→</span>
-              </button>
-            </div>
-          </Nav>
-        </Navbar.Collapse>
+            <Nav className="ms-auto" style={{ alignItems: 'center', flexDirection: 'column' }}>
+              <div style={{ display: 'flex', gap: '15px', marginTop: '10px' }}>
+                <button
+                  onClick={() => navigate(-1)}
+                  style={{
+                    backgroundColor: 'transparent',
+                    border: 'none',
+                    color: '#FFFDD0',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center'
+                  }}
+                >
+                  <span style={{ marginTop: '5px' }}>←</span>
+                </button>
+                <button
+                  onClick={() => navigate(1)}
+                  style={{
+                    backgroundColor: 'transparent',
+                    border: 'none',
+                    color: '#FFFDD0',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center'
+                  }}
+                >
+                  <span style={{ marginTop: '5px' }}>→</span>
+                </button>
+              </div>
+            </Nav>
+          </Navbar.Collapse>
         </Container>
       </Navbar>
       <Container
