@@ -1,22 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate,Link } from "react-router-dom";
-import {
-  Container,
-  Navbar,
-  Nav,
-  NavDropdown
-} from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
+import { useNavigate, Link } from "react-router-dom";
+import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css"; 
+import Confetti from "react-confetti";
 
 const Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [isUsernameUnique, setIsUsernameUnique] = useState(true); // New state for username uniqueness
+  const [isUsernameUnique, setIsUsernameUnique] = useState(true);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [supplierId, setSupplierId] = useState(null);
   const [suppliers, setSuppliers] = useState([]);
+  const [showConfetti, setShowConfetti] = useState(false);
 
   const navigate = useNavigate();
 
@@ -51,7 +48,7 @@ const Register = () => {
     try {
       const response = await fetch(`/customer/is-name-unique?name=${username}`);
       const isUnique = await response.json();
-      setIsUsernameUnique(isUnique); // Set state based on API response
+      setIsUsernameUnique(isUnique);
     } catch (error) {
       console.error("Error checking username uniqueness:", error);
       setIsUsernameUnique(false);
@@ -97,8 +94,10 @@ const Register = () => {
       });
 
       if (response.ok) {
-        alert("Registration successful!");
-        navigate("/login");
+        setShowConfetti(true);
+        setTimeout(() => {
+          navigate("/login");
+        }, 3000);
       } else {
         const error = await response.json();
         alert(`Registration failed: ${error.message}`);
@@ -111,6 +110,7 @@ const Register = () => {
 
   return (
     <>
+      {showConfetti && <Confetti />}
       <Navbar bg="primary" variant="dark" expand="lg">
         <Container>
           <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
@@ -193,9 +193,9 @@ const Register = () => {
             <div className="col-md-6 d-flex align-items-center justify-content-center">
               <div
                 style={{
-                  maxWidth: "900px", // Match the width of the CustomerLogin component
-                  padding: "40px", // Match the padding of the CustomerLogin component
-                  backgroundColor: "#ffffff", // White background to match
+                  maxWidth: "900px",
+                  padding: "40px",
+                  backgroundColor: "#ffffff",
                   borderRadius: "8px",
                   boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
                   borderColor: "#0033A0",
@@ -235,10 +235,10 @@ const Register = () => {
                       required
                       style={{
                         width: "100%",
-                        padding: "12px", // Increased padding
+                        padding: "12px",
                         borderRadius: "4px",
-                        border: "1px solid #0033A0", // Match the border color
-                        fontSize: "16px", // Increased font size
+                        border: "1px solid #0033A0",
+                        fontSize: "16px",
                       }}
                     />
                     {!isUsernameUnique && (
@@ -268,10 +268,10 @@ const Register = () => {
                       required
                       style={{
                         width: "100%",
-                        padding: "12px", // Increased padding
+                        padding: "12px",
                         borderRadius: "4px",
-                        border: "1px solid #0033A0", // Match the border color
-                        fontSize: "16px", // Increased font size
+                        border: "1px solid #0033A0",
+                        fontSize: "16px",
                       }}
                     />
                   </div>
@@ -296,10 +296,10 @@ const Register = () => {
                       required
                       style={{
                         width: "100%",
-                        padding: "12px", // Increased padding
+                        padding: "12px",
                         borderRadius: "4px",
-                        border: "1px solid #0033A0", // Match the border color
-                        fontSize: "16px", // Increased font size
+                        border: "1px solid #0033A0",
+                        fontSize: "16px",
                       }}
                     />
                   </div>
@@ -324,10 +324,10 @@ const Register = () => {
                       required
                       style={{
                         width: "100%",
-                        padding: "12px", // Increased padding
+                        padding: "12px",
                         borderRadius: "4px",
-                        border: "1px solid #0033A0", // Match the border color
-                        fontSize: "16px", // Increased font size
+                        border: "1px solid #0033A0",
+                        fontSize: "16px",
                       }}
                     />
                   </div>
@@ -352,10 +352,10 @@ const Register = () => {
                       required
                       style={{
                         width: "100%",
-                        padding: "12px", // Increased padding
+                        padding: "12px",
                         borderRadius: "4px",
-                        border: "1px solid #0033A0", // Match the border color
-                        fontSize: "16px", // Increased font size
+                        border: "1px solid #0033A0",
+                        fontSize: "16px",
                       }}
                     />
                   </div>
@@ -378,10 +378,10 @@ const Register = () => {
                       required
                       style={{
                         width: "100%",
-                        padding: "12px", // Increased padding
+                        padding: "12px",
                         borderRadius: "4px",
-                        border: "1px solid #0033A0", // Match the border color
-                        fontSize: "16px", // Increased font size
+                        border: "1px solid #0033A0",
+                        fontSize: "16px",
                       }}
                     >
                       <option value="">Select Supplier</option>
@@ -396,29 +396,29 @@ const Register = () => {
                     type="submit"
                     style={{
                       width: "100%",
-                      padding: "12px", // Increased padding
-                      backgroundColor: "#0033A0", // Match the button color
+                      padding: "12px",
+                      backgroundColor: "#0033A0",
                       color: "white",
                       border: "none",
                       borderRadius: "4px",
                       cursor: "pointer",
-                      fontSize: "16px", // Increased font size
+                      fontSize: "16px",
                     }}
                   >
                     Register
                   </button>
                   <div style={{ textAlign: "center", marginTop: "20px" }}>
-                  <a
-                    href="/login"
-                    style={{
-                      color: "#0033A0",
-                      textDecoration: "none",
-                      fontSize: "16px",
-                    }}
-                  >
-                    Already have an account? Login
-                  </a>
-                </div>
+                    <a
+                      href="/login"
+                      style={{
+                        color: "#0033A0",
+                        textDecoration: "none",
+                        fontSize: "16px",
+                      }}
+                    >
+                      Already have an account? Login
+                    </a>
+                  </div>
                 </form>
               </div>
             </div>
