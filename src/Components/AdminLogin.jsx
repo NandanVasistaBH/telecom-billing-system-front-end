@@ -169,6 +169,7 @@ const AdminLogin = () => {
                 )}
                 <button
                   type="submit"
+                  data-testid="admin-button"
                   style={{
                     width: "100%",
                     padding: "12px",
