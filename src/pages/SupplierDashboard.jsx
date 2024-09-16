@@ -20,7 +20,7 @@ const SupplierDashboard = () => {
     const token = localStorage.getItem("jwtToken");
     const user = localStorage.getItem("user");
 
-    if(user==="admin" || user==="customer"){
+    if(user==="admin" || user==="customer" || user==="master"){
       navigate("/supplierlogin")
       return;
     }

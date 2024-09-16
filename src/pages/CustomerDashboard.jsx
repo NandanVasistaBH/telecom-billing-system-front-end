@@ -28,8 +28,15 @@
     const [transactionDate] = useState("2024-09-05T10:30:00");
     const [paymentGateway] = useState("RazorPay");
     const navigate = useNavigate();
+    const [showDropdown, setShowDropdown] = useState(false);
 
-    
+    const handleMouseEnter = () => {
+      setShowDropdown(true);
+    };
+
+    const handleMouseLeave = () => {
+      setShowDropdown(false);
+    };
 
     useEffect(() => {
       const loadRazorpayScript = () => {
@@ -44,7 +51,7 @@
 
       const user = localStorage.getItem("user");
 
-      if(user==="admin" || user==="supplier"){
+      if(user==="admin" || user==="supplier" || user==="master"){
         navigate("/login");
         return;
       }
@@ -334,20 +341,63 @@
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="me-auto">
-                <NavDropdown title="View Plans" id="basic-nav-dropdown">
-                  <NavDropdown.Item
-                    onClick={() => handlePlanSelection("prepaid")}
-                  >
-                    Prepaid
-                  </NavDropdown.Item>
-                  <NavDropdown.Item
-                    onClick={() => handlePlanSelection("postpaid")}
-                  >
-                    Postpaid
-                  </NavDropdown.Item>
-                </NavDropdown>
-              </Nav>
+                    <Nav className="me-auto">
+              <NavDropdown
+                title={<span style={{ color: "#fff", fontSize: '1.2rem' }}>View Plans</span>}
+                id="basic-nav-dropdown"
+                style={{
+                  backgroundColor: 'transparent', // Makes background transparent
+                  boxShadow: 'none', // Removes shadow
+                  border: 'none' // Ensures no border
+                }}
+                show={showDropdown}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+              >
+                <NavDropdown.Item
+                  onClick={() => handlePlanSelection("prepaid")}
+                  style={{
+                    color: '#0033a0',
+                    fontWeight: 'bold',
+                    padding: '10px 20px',
+                    transition: 'background-color 0.3s ease, color 0.3s ease',
+                    borderRadius: '5px',
+                    backgroundColor: '#fff', // Ensure item background is white
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.backgroundColor = '#0033a0';
+                    e.target.style.color = '#fff';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.backgroundColor = '#fff';
+                    e.target.style.color = '#0033a0';
+                  }}
+                >
+                  Prepaid
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  onClick={() => handlePlanSelection("postpaid")}
+                  style={{
+                    color: '#0033a0',
+                    fontWeight: 'bold',
+                    padding: '10px 20px',
+                    transition: 'background-color 0.3s ease, color 0.3s ease',
+                    borderRadius: '5px',
+                    backgroundColor: '#fff', // Ensure item background is white
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.backgroundColor = '#0033a0';
+                    e.target.style.color = '#fff';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.backgroundColor = '#fff';
+                    e.target.style.color = '#0033a0';
+                  }}
+                >
+                  Postpaid
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
               <Nav className="ms-auto" style={{ alignItems: 'center', flexDirection: 'column' }}>
                 <Nav.Link onClick={handleLogout} href="/login" style={{ color: "#FFFDD0" }}>
                   Logout

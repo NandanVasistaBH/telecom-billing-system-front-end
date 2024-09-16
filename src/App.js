@@ -19,6 +19,8 @@ import AdminDashboard from './pages/AdminDashboard';
 import SupplierRegister from './pages/SupplierRegister';
 import SupplierLogin from './pages/SupplierLogin';
 import SupplierDashboard from './pages/SupplierDashboard';
+import MasterLogin from './pages/MasterLogin';
+import MasterDashboard from './pages/MasterDashboard.jsx';
 
 function App() {
   return (
@@ -51,6 +53,8 @@ function App() {
           <Route path="/supplierregister" element={<SupplierRegister/>}/>
           <Route path="/supplierlogin" element={<SupplierLogin/>}/>
           <Route path="/supplierdashboard" element ={<SupplierDashboard/>}/>
+          <Route path="/masterlogin" element ={<MasterLogin/>}/>
+          <Route path="/Masterdashboard" element ={<MasterDashboard/>}/>
         </Routes>
       </div>
     </Router>

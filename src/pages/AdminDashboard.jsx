@@ -17,7 +17,7 @@ const AdminDashboard = () => {
   const token=localStorage.getItem("jwtToken");
   const user = localStorage.getItem("user");
 
-    if(user==="supplier" || user==="customer"){
+    if(user==="supplier" || user==="customer"|| user==="master"){
       navigate("/adminlogin")
     }
   const handleLogout=()=>{

@@ -72,7 +72,7 @@ const TelecomBillingSystem = () => {
           <span className="logo-text">TeleBillPro</span>
         </div>
         <div className="nav-options">
-          {selectedRole === 'customer' && (
+           
             <>
 
               {<div className="dropdown">
@@ -116,7 +116,7 @@ const TelecomBillingSystem = () => {
              
             </>
       
-          )}
+          
           {selectedRole === 'supplier' && (
             <>
               
