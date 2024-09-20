@@ -20,7 +20,7 @@ spec:
         resources:  # Specify resource requests and limits
           requests:
             cpu: "100m"
-            memory: "256Mi"
+            memory: "1024Mi"
           limits:
             cpu: "500m"
-            memory: "512Mi"
+            memory: "1524Mi"
