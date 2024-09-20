@@ -16,11 +16,11 @@ spec:
       - name: react-app
         image: mrudulaa94/billing_system_frontend
         ports:
-        - containerPort: 9000
-        resources:  # Specify resource requests and limits
+        - containerPort: 3000
+        resources:   
           requests:
-            cpu: "100m"
-            memory: "1024Mi"
+            cpu: "250m"       
+            memory: "2048Mi"  
           limits:
-            cpu: "500m"
-            memory: "1524Mi"
+            cpu: "1000m"      
+            memory: "3072Mi"  

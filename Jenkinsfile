@@ -60,6 +60,7 @@ pipeline {
                     dir
                     kubectl config use-context docker-desktop
                     kubectl apply -f react-app-deployment.yaml
+                    kubectl apply -f react-app-service.yaml
                     kubectl apply -f hpa-react.yaml
                     '''
                 }
