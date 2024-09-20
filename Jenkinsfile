@@ -53,11 +53,29 @@ pipeline {
                 }
             }
         }
-        stage("Run React Container") {
+        stage('Deploy') {
             steps {
-                bat '''
-                docker run -d --name my-react-app --network my-network -p 3002:3000 my-react-app
-                '''
+                script {
+                    bat '''
+                    kubectl config use-context docker-desktop
+                    kubectl apply -f react-app-deployment.yaml
+                    kubectl apply -f hpa-react.yaml
+                    '''
+                }
+            }
+        }
+        stage('Verify') {
+            steps {
+                script {
+                    // Verify deployments, services, and HPA
+                    bat '''
+                    kubectl get pv
+                    kubectl get pvc
+                    kubectl get deployments
+                    kubectl get services
+                    kubectl get hpa
+                    '''
+                }
             }
         }
     }
