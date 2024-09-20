@@ -57,6 +57,7 @@ pipeline {
             steps {
                 script {
                     bat '''
+                    dir
                     kubectl config use-context docker-desktop
                     kubectl apply -f react-app-deployment.yaml
                     kubectl apply -f hpa-react.yaml
