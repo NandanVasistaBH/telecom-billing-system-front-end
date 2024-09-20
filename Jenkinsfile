@@ -1,6 +1,10 @@
 pipeline {
     agent any
-    
+    environment {
+        KUBECONFIG = "C:/Users/e039325/.kube/config" 
+        DOCKER_REGISTRY = "docker.io" 
+        IMAGE_NAME = "mrudulaa94/billing_system_frontend"
+    }
     stages {
         stage('Clone') {
             steps {
@@ -30,15 +34,22 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    def imageName = 'my-react-app'
                     try{
-                        bat "docker rm -f ${imageName}"
-                        bat "docker rmi -f ${imageName}"
+                        bat "docker rm -f ${IMAGE_NAME}"
+                        bat "docker rmi -f ${IMAGE_NAME}"
                     }   
                      catch(Exception e) {
                         echo "Exception occurred: " + e.toString()
                     }
-                    bat "docker build  -t ${imageName} ."
+                    bat "docker build  -t ${IMAGE_NAME} ."
+                }
+            }
+        }
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    bat "docker login -u mrudulaa94 -p Tela@39628"
+                    bat "docker push  ${IMAGE_NAME}"                    
                 }
             }
         }
