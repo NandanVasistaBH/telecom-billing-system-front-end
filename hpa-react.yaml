@@ -1,4 +1,4 @@
-apiVersion: autoscaling/v1
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: react-app-hpa
@@ -9,4 +9,23 @@ spec:
     name: react-app
   minReplicas: 1
   maxReplicas: 5
-  targetCPUUtilizationPercentage: 70
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 60  # Time to wait before scaling up again
+      policies:
+        - type: Pods
+          value: 1  # Maximum pods to add in one scale-up
+          periodSeconds: 20  # Time period for the scale-up policy
+    scaleDown:
+      stabilizationWindowSeconds: 120  # Prevent rapid scale-down
+      policies:
+        - type: Pods
+          value: 1  # Scale down by 1 pod at a time
+          periodSeconds: 30  # Time period for the scale down policy
