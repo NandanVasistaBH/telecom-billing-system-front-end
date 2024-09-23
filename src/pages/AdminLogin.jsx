@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Container, Navbar, Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
+import telstralogo1 from '../images/telstralogo1.jpeg';
 
-import telstralogo1 from '../Components/images/telstralogo1.jpeg';
 const AdminLogin = () => {
   const [formData, setFormData] = useState({
     user: {

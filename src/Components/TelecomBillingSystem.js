@@ -17,7 +17,7 @@ import ImageCarousel from './ImageCarousel';
 import AboutUs from './AboutUs';
 import AdminLogin from './AdminLogin';
 import SupplierRegister from '../pages/SupplierRegister';
-import telstralogo1 from './images/telstralogo1.jpeg';
+import telstralogo1 from './Components/images/telstralogo1.jpeg';
 const TelecomBillingSystem = () => {
   const [selectedRole, setSelectedRole] = useState(null);
   const [openDropdown, setOpenDropdown] = useState(null);
