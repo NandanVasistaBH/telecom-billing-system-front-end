@@ -67,7 +67,8 @@ const AdminLogin = () => {
         <Container>
           <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
             <img
-              src="/telstraLogo1.jpeg"
+              // src="/telstraLogo1.jpeg"
+              src={telstralogo1}
               alt="Telstra Logo"
               style={{ width: "50px", height: "auto" }}
             />
