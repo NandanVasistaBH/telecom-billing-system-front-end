@@ -17,7 +17,6 @@ import ImageCarousel from './ImageCarousel';
 import AboutUs from './AboutUs';
 import AdminLogin from './AdminLogin';
 import SupplierRegister from '../pages/SupplierRegister';
-import telstralogo1 from './Components/images/telstralogo1.jpeg';
 const TelecomBillingSystem = () => {
   const [selectedRole, setSelectedRole] = useState(null);
   const [openDropdown, setOpenDropdown] = useState(null);
@@ -44,11 +43,11 @@ const TelecomBillingSystem = () => {
       setModalOpen(true);
     }
   };
-  
+ 
   const handlePlanSelection = (planType) => {
     navigate(`/${planType}`);
   };
-  
+ 
  
   return (
     <div className="telecom-billing-system">
@@ -69,13 +68,13 @@ const TelecomBillingSystem = () => {
  
       <div className="nav-bar">
         <div className="logo">
-          <img src={telstralogo1} alt="Telstra Logo" className="telstralogo" />
+          <img src="/telstraLogo1.jpeg" alt="Telstra Logo" className="telstralogo" />
           <span className="logo-text">TeleBillPro</span>
         </div>
         <div className="nav-options">
            
             <>
-
+ 
               {<div className="dropdown">
                 <button
                   onClick={() => toggleDropdown('viewPlans')}
@@ -116,11 +115,11 @@ const TelecomBillingSystem = () => {
               </div>
              
             </>
-      
-          
+     
+         
           {selectedRole === 'supplier' && (
             <>
-              
+             
               <div className="dropdown">
                 <button
                   onClick={() => toggleDropdown('account')}
@@ -158,23 +157,23 @@ const TelecomBillingSystem = () => {
           )}
         </div>
       </div>
-
-        
-      
+ 
+       
+     
       <div className="main-content">
           {selectedRole !== 'customer' && selectedRole !== 'supplier' && selectedRole !== 'admin' &&(
             <div className="content">
-          
+         
             <ImageCarousel></ImageCarousel>
             <AboutUs></AboutUs>
           </div>
-        )} 
+        )}
          {selectedRole === 'customer' && (
-          
+         
           <div className="content">
             <Customer></Customer>
           </div>
-        )} 
+        )}
  
          {selectedRole === 'customer' && selectedDropdownOption === 'prepaid-recharge' && (
           <RechargeForm />
@@ -206,9 +205,9 @@ const TelecomBillingSystem = () => {
         )}
         {!selectedRole && (
           <div className="content center">
-            
+           
           </div>
-        )} 
+        )}
       </div>
  
        

@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Container, Navbar, Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
-import telstralogo1 from '../images/telstralogo1.jpeg';
-
+ 
 const AdminLogin = () => {
   const [formData, setFormData] = useState({
     user: {
@@ -14,7 +13,7 @@ const AdminLogin = () => {
   });
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
-
+ 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -25,11 +24,11 @@ const AdminLogin = () => {
       },
     }));
   };
-
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const apiEndpoint = "http://localhost:10000/admin/login";
-
+ 
     try {
       const response = await fetch(apiEndpoint, {
         method: "POST",
@@ -60,15 +59,14 @@ const AdminLogin = () => {
       );
     }
   };
-
+ 
   return (
     <>
       <Navbar bg="primary" variant="dark" expand="lg">
         <Container>
           <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
             <img
-              // src="/telstraLogo1.jpeg"
-              src={telstralogo1}
+              src="/telstraLogo1.jpeg"
               alt="Telstra Logo"
               style={{ width: "50px", height: "auto" }}
             />
@@ -109,10 +107,10 @@ const AdminLogin = () => {
               </div>
             </Nav>
           </Navbar.Collapse>
-
+ 
         </Container>
       </Navbar>
-
+ 
       <div
         style={{
           background:
@@ -235,7 +233,7 @@ const AdminLogin = () => {
                   >
                     Login
                   </button>
-                  
+                 
                 </form>
               </div>
             </div>
@@ -245,5 +243,6 @@ const AdminLogin = () => {
     </>
   );
 };
-
+ 
 export default AdminLogin;
+ 

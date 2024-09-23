@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Navbar } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
-
+ 
 const AdminLogin = () => {
   const [formData, setFormData] = useState({
     user: {
@@ -13,7 +13,7 @@ const AdminLogin = () => {
   });
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
-
+ 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -24,11 +24,11 @@ const AdminLogin = () => {
       },
     }));
   };
-
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const apiEndpoint = "http://localhost:10000/admin/login";
-
+ 
     try {
       const response = await fetch(apiEndpoint, {
         method: "POST",
@@ -58,7 +58,7 @@ const AdminLogin = () => {
       );
     }
   };
-
+ 
   return (
     <div
       style={{
@@ -214,5 +214,5 @@ const AdminLogin = () => {
     </div>
   );
 };
-
+ 
 export default AdminLogin;
