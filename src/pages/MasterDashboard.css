@@ -1,0 +1,49 @@
+.navbar {
+  transition: background-color 0.3s ease;
+}
+
+.table {
+  background-color: white;
+  border-collapse: collapse;
+}
+
+.table th {
+  background-color: #e9ecef; /* Lighter header background */
+  color: #0033A0;
+}
+
+.table td {
+  vertical-align: middle; /* Center align table content */
+}
+
+.table tr {
+  transition: background-color 0.3s ease;
+}
+
+.card {
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Softer shadow */
+}
+
+.btn {
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+.alert {
+  transition: opacity 0.5s ease;
+}
+
+.alert.success {
+  opacity: 0.9;
+}
+
+.alert.error {
+  opacity: 0.9;
+}

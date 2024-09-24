@@ -1,15 +1,20 @@
-FROM node:20-alpine
+# Use an official Node.js image as the base
+FROM node:18-alpine
 
-ENV NODE_ENV=DEV
+# Set the working directory inside the container
+WORKDIR /app
 
-WORKDIR /code
+# Copy the package.json and package-lock.json (or yarn.lock) to the container
+COPY package*.json /app/
 
-COPY package.json .
+# Install dependencies
+RUN npm install --watch
 
-RUN npm install
-
-EXPOSE 3000
-
+# Copy the rest of the application files to the container
 COPY . .
 
-CMD ["npm","run","start"]
+# Expose the port the app runs on
+EXPOSE 3000
+
+# Start the React app in development mode
+CMD ["npm", "start"]

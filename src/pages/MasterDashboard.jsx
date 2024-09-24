@@ -29,6 +29,7 @@ const MasterDashboard = () => {
 
         if (response.ok) {
           const data = await response.json();
+          console.log(data);
           setSubscriptions(data);
         } else {
           const errorData = await response.text(); // Use text() for plain text responses
@@ -191,6 +192,7 @@ const MasterDashboard = () => {
                           <th>Subscription Type</th>
                           <th>Description</th>
                           <th>Price</th>
+                          <th>Number Of Active Subscribers</th>
                           <th>Number Of Days</th>
                           <th>Status</th>
                           <th>Request</th>
@@ -204,6 +206,7 @@ const MasterDashboard = () => {
                             <td>{sub.type}</td>
                             <td>{sub.description}</td>
                             <td>{sub.price}</td>
+                            <td>{sub.noOfActiveSubscribers}</td>
                             <td>{sub.noOfDays}</td>
                             <td>{sub.status}</td>
                             <td>
