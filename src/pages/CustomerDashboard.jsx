@@ -110,38 +110,34 @@
     };
 
     const handleGeneratePDF = (invoiceId) => {
-      if(!invoiceId) {
-        alert("the specified invoice doesn't exist")
-        return
+      if (!invoiceId) {
+        alert("The specified invoice doesn't exist");
+        return;
       }
-     const token = localStorage.getItem("jwtToken");
-     fetch(process.env.REACT_APP_BACKEND_URI+`/pdf/create?invoiceId=${invoiceId}`, {
-       method: "GET",
-       headers: {
-         "Content-Type": "application/json",
-         Authorization: `Bearer ${token}`,
-       },
-     })
-       .then((response) => {
-         if (response.ok) {
-           return response.blob(); // Convert the response to a Blob (binary large object)
-         }
-         throw new Error("Failed to generate PDF.");
-       })
-       .then((blob) => {
-         // Create a URL for the Blob and open it in a new window
-         const url = window.URL.createObjectURL(blob);
-         const a = document.createElement("a");
-         a.href = url;
-         a.download = `invoice-${invoiceId}.pdf`; // Filename for the downloaded PDF
-         document.body.appendChild(a);
-         a.click();
-         a.remove();
-       })
-       .catch((error) => {
-         console.error("Error generating PDF:", error);
-       });
-   };
+      
+      const token = localStorage.getItem("jwtToken");
+      fetch(`${process.env.REACT_APP_BACKEND_URI}/pdf/create?invoiceId=${invoiceId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.text();
+          }
+          throw new Error("Failed to generate PDF.");
+        })
+        .then((pdfUrl) => {
+          window.open(pdfUrl, '_blank'); // Open in a new tab
+        })
+        .catch((error) => {
+          console.error("Error generating PDF:", error);
+        });
+    };
+    
+    
 
 
     const handlePayBill = async (invoice) => {
