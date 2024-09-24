@@ -42,7 +42,7 @@ const RechargeForm = () => {
     }
     const getUserDetailsFromToken = async () => {
       const response = await fetch(
-        "http://localhost:10000/customer/details-from-token",
+        process.env.REACT_APP_BACKEND_URI+"/customer/details-from-token",
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("jwtToken"),
@@ -65,7 +65,7 @@ const RechargeForm = () => {
   const createPayment = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:10000/create", {
+      const response = await fetch(process.env.REACT_APP_BACKEND_URI+"/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -120,7 +120,7 @@ const RechargeForm = () => {
         handler: async function (response) {
           try {
             const addPaymentResponse = await fetch(
-              "http://localhost:10000/add-payment",
+              process.env.REACT_APP_BACKEND_URI+"/add-payment",
               {
                 method: "POST",
                 headers: {
@@ -208,7 +208,7 @@ const RechargeForm = () => {
     try {
       const jwtToken = localStorage.getItem("jwtToken");
       const response = await fetch(
-        "http://localhost:10000/invoice/create-prepaid",
+        process.env.REACT_APP_BACKEND_URI+"/invoice/create-prepaid",
         {
           method: "POST",
           headers: {
@@ -238,7 +238,7 @@ const RechargeForm = () => {
     try {
       const jwtToken = localStorage.getItem("jwtToken");
       const response = await fetch(
-        "http://localhost:10000/invoice/create-postpaid",
+        process.env.REACT_APP_BACKEND_URI+"/invoice/create-postpaid",
         {
           method: "POST",
           headers: {

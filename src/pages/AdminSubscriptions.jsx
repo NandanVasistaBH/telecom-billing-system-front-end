@@ -15,7 +15,7 @@ const AdminSubscriptions = () => {
       const token = localStorage.getItem("jwtToken"); // Get the JWT token from storage
       if (token) {
         // Fetch all subscriptions
-        fetch("http://localhost:10000/subscriptions/all", {
+        fetch(process.env.REACT_APP_BACKEND_URI+"/subscriptions/all", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`, // Include the token for authorization
@@ -51,7 +51,7 @@ const AdminSubscriptions = () => {
       return;
     }
 
-    fetch("http://localhost:10000/subscriptions/create-subscription", {
+    fetch(process.env.REACT_APP_BACKEND_URI+"/subscriptions/create-subscription", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -68,7 +68,7 @@ const AdminSubscriptions = () => {
       })
       .then(() => {
         // Refresh the subscription list after creating a new subscription
-        fetch("http://localhost:10000/subscriptions/all", {
+        fetch(process.env.REACT_APP_BACKEND_URI+"/subscriptions/all", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`, // Include the token for authorization
@@ -102,7 +102,7 @@ const AdminSubscriptions = () => {
   const handleDeleteSubscription = (id) => {
     const token = localStorage.getItem("jwtToken");
 
-    fetch(`http://localhost:10000/subscriptions/delete/${id}`, {
+    fetch(process.env.REACT_APP_BACKEND_URI+`/subscriptions/delete/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`, // Include the token for authorization

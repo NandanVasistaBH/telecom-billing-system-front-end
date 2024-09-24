@@ -26,7 +26,7 @@ const SupplierLogin = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:10000/supplier/login", {
+      const response = await fetch(process.env.REACT_APP_BACKEND_URI+"/supplier/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

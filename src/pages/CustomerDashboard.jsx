@@ -56,7 +56,7 @@
         return;
       }
       if (token) {
-        fetch("http://localhost:10000/customer/details-from-token", {
+        fetch(process.env.REACT_APP_BACKEND_URI+"/customer/details-from-token", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -82,7 +82,7 @@
     const fetchInvoices = (customerId) => {
       const token = localStorage.getItem("jwtToken");
 
-      fetch(`http://localhost:10000/invoice/all-invoice-customer/${customerId}`, {
+      fetch(process.env.REACT_APP_BACKEND_URI+`/invoice/all-invoice-customer/${customerId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -115,7 +115,7 @@
         return
       }
      const token = localStorage.getItem("jwtToken");
-     fetch(`http://localhost:10000/pdf/create?invoiceId=${invoiceId}`, {
+     fetch(process.env.REACT_APP_BACKEND_URI+`/pdf/create?invoiceId=${invoiceId}`, {
        method: "GET",
        headers: {
          "Content-Type": "application/json",
@@ -152,7 +152,7 @@
 
       const createPayment = async () => {
         try {
-          const response = await fetch("http://localhost:10000/create", {
+          const response = await fetch(process.env.REACT_APP_BACKEND_URI+"/create", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -192,7 +192,7 @@
             try {
               // Step 1: Add the payment to your system (optional)
               const addPaymentResponse = await fetch(
-                "http://localhost:10000/add-payment",
+                process.env.REACT_APP_BACKEND_URI+"/add-payment",
                 {
                   method: "POST",
                   headers: {
@@ -209,7 +209,7 @@
 
               // Step 2: Update the amountPaid in the backend after successful payment
               const updateInvoiceResponse = await fetch(
-                "http://localhost:10000/invoice/update-postpaid",
+                process.env.REACT_APP_BACKEND_URI+"/invoice/update-postpaid",
                 {
                   method: "PUT",
                   headers: {

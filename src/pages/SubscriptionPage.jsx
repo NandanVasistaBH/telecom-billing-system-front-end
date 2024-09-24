@@ -14,7 +14,7 @@ const PrepaidRecharge = () => {
           throw new Error('No token found');
         }
 
-        const response = await fetch('http://localhost:10000/subscriptions/all', {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URI+'/subscriptions/all', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,

@@ -24,7 +24,7 @@ const CustomerLogin = () => {
 
     try {
       console.log(loginData)
-      const response = await fetch('http://localhost:10000/customer/login', {
+      const response = await fetch(process.env.REACT_APP_BACKEND_URI+'/customer/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

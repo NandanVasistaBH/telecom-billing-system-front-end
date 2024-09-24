@@ -31,7 +31,7 @@ const MasterLogin = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:10000/admin/master-login", {
+      const response = await fetch(process.env.REACT_APP_BACKEND_URI+"/admin/master-login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

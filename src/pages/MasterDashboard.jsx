@@ -16,7 +16,7 @@ const MasterDashboard = () => {
         navigate('/masterlogin');
         return;
       }
-      const apiEndpoint = 'http://localhost:10000/subscriptions/all-subscription-types';
+      const apiEndpoint = process.env.REACT_APP_BACKEND_URI+'/subscriptions/all-subscription-types';
 
       try {
         const response = await fetch(apiEndpoint, {
@@ -49,7 +49,7 @@ const MasterDashboard = () => {
     if (!token) return;
 
     try {
-      const response = await fetch('http://localhost:10000/subscriptions/approve-subscription', {
+      const response = await fetch(process.env.REACT_APP_BACKEND_URI+'/subscriptions/approve-subscription', {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -81,7 +81,7 @@ const MasterDashboard = () => {
     if (!token) return;
 
     try {
-      const response = await fetch('http://localhost:10000/subscriptions/reject-subscription', {
+      const response = await fetch(process.env.REACT_APP_BACKEND_URI+'/subscriptions/reject-subscription', {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -109,7 +109,7 @@ const MasterDashboard = () => {
   const handleDeleteSubscription = (id) => {
     const token = localStorage.getItem("jwtToken");
 
-    fetch(`http://localhost:10000/subscriptions/delete/${id}`, {
+    fetch(process.env.REACT_APP_BACKEND_URI+`/subscriptions/delete/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`, // Include the token for authorization

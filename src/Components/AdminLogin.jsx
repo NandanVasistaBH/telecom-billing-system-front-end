@@ -27,7 +27,7 @@ const AdminLogin = () => {
  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const apiEndpoint = "http://localhost:10000/admin/login";
+    const apiEndpoint = process.env.REACT_APP_BACKEND_URI+"/admin/login";
  
     try {
       const response = await fetch(apiEndpoint, {

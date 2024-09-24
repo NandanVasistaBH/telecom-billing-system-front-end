@@ -15,7 +15,7 @@ const PostpaidRecharge = () => {
     const fetchSubscriptions = async () => {
       try {
         const response = await fetch(
-          "http://localhost:10000/subscriptions/postpaid",
+          process.env.REACT_APP_BACKEND_URI+"/subscriptions/postpaid",
           {
             method: "GET",
             headers: {

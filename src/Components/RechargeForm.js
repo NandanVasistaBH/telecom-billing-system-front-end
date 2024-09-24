@@ -43,7 +43,7 @@ const RechargeForm = () => {
     console.log('_____Payment_____');
     console.log(amountPaid);
     try {
-      const response = await fetch('http://localhost:10000/create', {
+      const response = await fetch(process.env.REACT_APP_BACKEND_URI+'/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -93,7 +93,7 @@ const RechargeForm = () => {
         receipt: payment.customer,
         handler: function (response) {
           console.log('Payment Success: and its id to be sent backend', response.razorpay_payment_id);
-          const resp = fetch("http://localhost:10000/add-payment",{
+          const resp = fetch(process.env.REACT_APP_BACKEND_URI+"/add-payment",{
           method: 'POST',
           headers: {
           'Content-Type': 'application/json',

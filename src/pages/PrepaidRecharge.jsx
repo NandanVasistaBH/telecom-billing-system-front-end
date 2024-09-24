@@ -23,7 +23,7 @@ const PrepaidRecharge = () => {
        
 
         const response = await fetch(
-          "http://localhost:10000/subscriptions/prepaid",
+          process.env.REACT_APP_BACKEND_URI+"/subscriptions/prepaid",
           {
             method: "GET",
             headers: {

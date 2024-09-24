@@ -7,7 +7,7 @@ const RazorPayPayment = () => {
     console.log('_____Payment_____');
 
     try {
-      const response = await fetch('http://localhost:10000/create', {
+      const response = await fetch(process.env.REACT_APP_BACKEND_URI+'/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

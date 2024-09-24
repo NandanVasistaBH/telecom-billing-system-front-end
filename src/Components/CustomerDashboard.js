@@ -14,7 +14,7 @@ const CustomerDashboard = () => {
 
     if (token) {
       // Fetch user details from backend using token
-      fetch("http://localhost:10000/customer/{name}", {
+      fetch(process.env.REACT_APP_BACKEND_URI+"/customer/{name}", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

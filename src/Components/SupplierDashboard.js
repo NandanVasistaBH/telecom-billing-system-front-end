@@ -8,7 +8,7 @@ const SupplierDashboard = () => {
 
   const fetchCustomers = async () => {
     try {
-      const response = await fetch(`http://localhost:10000/supplier/list-of-customers?supplierId=${supplierId}`, {
+      const response = await fetch(process.env.REACT_APP_BACKEND_URI+`/supplier/list-of-customers?supplierId=${supplierId}`, {
         method: 'GET',
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem("jwtToken"),

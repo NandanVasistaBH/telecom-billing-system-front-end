@@ -28,7 +28,7 @@ const SupplierDashboard = () => {
       if (token) {
         try {
           const response = await fetch(
-            `http://localhost:10000/supplier/details-from-token`,
+            process.env.REACT_APP_BACKEND_URI+`/supplier/details-from-token`,
             {
               method: "GET",
               headers: {
@@ -58,7 +58,7 @@ const SupplierDashboard = () => {
     if (!supplierDetails) return;
     try {
       const response = await fetch(
-        `http://localhost:10000/supplier/list-of-customers?supplierId=${supplierDetails.id}`,
+        process.env.REACT_APP_BACKEND_URI+`/supplier/list-of-customers?supplierId=${supplierDetails.id}`,
         {
           method: "GET",
           headers: {
