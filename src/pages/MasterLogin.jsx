@@ -67,7 +67,7 @@ const MasterLogin = () => {
         <Container>
           <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
             <img
-              src="/telstraLogo1.jpeg"
+              src="https://invoice-telecom-billing.s3.amazonaws.com/telstralogo1.jpeg"
               alt="Telstra Logo"
               style={{ width: "50px", height: "auto" }}
             />
@@ -123,7 +123,7 @@ const MasterLogin = () => {
           <div className="row w-100">
             <div className="col-md-6 d-flex align-items-center justify-content-center">
               <img
-                src="../telstraLogo1.jpeg"
+                src="https://invoice-telecom-billing.s3.amazonaws.com/telstralogo1.jpeg"
                 alt="Master Login"
                 className="img-fluid"
                 style={{ maxHeight: "100vh", objectFit: "cover" }}

@@ -68,7 +68,7 @@ const TelecomBillingSystem = () => {
  
       <div className="nav-bar">
         <div className="logo">
-          <img src="/telstraLogo1.jpeg" alt="Telstra Logo" className="telstralogo" />
+          <img src="https://invoice-telecom-billing.s3.amazonaws.com/telstralogo1.jpeg" alt="Telstra Logo" className="telstralogo" />
           <span className="logo-text">TeleBillPro</span>
         </div>
         <div className="nav-options">

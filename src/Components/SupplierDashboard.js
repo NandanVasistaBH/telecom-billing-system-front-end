@@ -35,7 +35,7 @@ const SupplierDashboard = () => {
       <div className="nav-bar flex items-center justify-between bg-blue-800 p-4 text-white shadow-md">
         <div className="logo flex items-center">
           <img
-            src="/telstraLogo1.jpeg"
+            src="https://invoice-telecom-billing.s3.amazonaws.com/telstralogo1.jpeg"
             alt="Telstra Logo"
             className="telstralogo w-14 h-14 mr-3"
           />

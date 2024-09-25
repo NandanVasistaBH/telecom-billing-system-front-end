@@ -72,7 +72,7 @@ const AdminLogin = () => {
         <div className="row w-100">
           <div className="col-md-6 d-flex align-items-center justify-content-center">
             <img
-              src="../telstraLogo1.jpeg"
+              src="https://invoice-telecom-billing.s3.amazonaws.com/telstralogo1.jpeg"
               alt="Admin Login"
               className="img-fluid"
               style={{ maxHeight: "100vh", objectFit: "cover" }}

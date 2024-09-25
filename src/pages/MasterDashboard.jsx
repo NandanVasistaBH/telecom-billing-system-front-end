@@ -138,7 +138,7 @@ const MasterDashboard = () => {
         <Container>
           <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
             <img
-              src="/telstraLogo1.jpeg"
+              src="https://invoice-telecom-billing.s3.amazonaws.com/telstralogo1.jpeg"
               alt="Telstra Logo"
               style={{ width: '50px', height: 'auto' }}
             />
