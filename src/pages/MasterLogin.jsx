@@ -80,7 +80,7 @@ const MasterLogin = () => {
             <Nav className="ms-auto" style={{ alignItems: 'center', flexDirection: 'column' }}>
               <div style={{ display: 'flex', gap: '15px', marginTop: '10px' }}>
                 <button
-                  onClick={() => navigate(-1)}
+                  onClick={() => navigate("/")}
                   style={{
                     backgroundColor: 'transparent',
                     border: 'none',
